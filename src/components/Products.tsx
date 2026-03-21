@@ -1,10 +1,11 @@
-import { useRef, useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
+import { useTextScramble } from "@/hooks/useTextScramble";
 
 const sharp = [0.16, 1, 0.3, 1];
 
-// Mini node network visualization
-const NodeNetwork = () => {
+// Animated network visualization — larger and more impressive
+const NetworkVis = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -15,53 +16,87 @@ const NodeNetwork = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = 300;
-    canvas.height = 200;
+    const dpr = window.devicePixelRatio || 1;
+    const w = 400, h = 300;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    ctx.scale(dpr, dpr);
 
-    const nodes = Array.from({ length: 12 }, () => ({
-      x: Math.random() * 280 + 10,
-      y: Math.random() * 180 + 10,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: 2 + Math.random() * 2,
+    const nodes = Array.from({ length: 24 }, (_, i) => ({
+      x: Math.random() * (w - 40) + 20,
+      y: Math.random() * (h - 40) + 20,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      r: 1.5 + Math.random() * 2.5,
+      phase: Math.random() * Math.PI * 2,
+      type: i < 4 ? "hub" : "node",
     }));
 
     let animId: number;
     const draw = () => {
-      ctx.clearRect(0, 0, 300, 200);
+      ctx.clearRect(0, 0, w, h);
 
-      // Update positions
       nodes.forEach(n => {
         n.x += n.vx;
         n.y += n.vy;
-        if (n.x < 10 || n.x > 290) n.vx *= -1;
-        if (n.y < 10 || n.y > 190) n.vy *= -1;
+        n.phase += 0.008;
+        if (n.x < 15 || n.x > w - 15) n.vx *= -1;
+        if (n.y < 15 || n.y > h - 15) n.vy *= -1;
       });
 
       // Draw connections
-      ctx.strokeStyle = "rgba(184, 115, 51, 0.12)";
-      ctx.lineWidth = 0.5;
-      nodes.forEach((a, i) => {
-        nodes.forEach((b, j) => {
-          if (j <= i) return;
-          const d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < 100) {
-            ctx.globalAlpha = 1 - d / 100;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (d < 120) {
+            const alpha = (1 - d / 120) * 0.15;
+            ctx.strokeStyle = `rgba(184, 115, 51, ${alpha})`;
+            ctx.lineWidth = nodes[i].type === "hub" || nodes[j].type === "hub" ? 1 : 0.5;
             ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.stroke();
           }
-        });
-      });
+        }
+      }
 
       // Draw nodes
-      ctx.globalAlpha = 1;
       nodes.forEach(n => {
-        ctx.fillStyle = "rgba(184, 115, 51, 0.3)";
+        const glow = 0.3 + Math.sin(n.phase) * 0.2;
+        const r = n.type === "hub" ? n.r * 1.5 : n.r;
+
+        // Glow
+        if (n.type === "hub") {
+          ctx.fillStyle = `rgba(184, 115, 51, ${glow * 0.15})`;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = `rgba(184, 115, 51, ${glow + 0.2})`;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fill();
+      });
+
+      // Data pulse effect along connections occasionally
+      const time = Date.now() * 0.001;
+      const pulseIdx = Math.floor(time * 0.5) % nodes.length;
+      const pulseNode = nodes[pulseIdx];
+      const t = (time * 0.5) % 1;
+      nodes.forEach(n => {
+        if (n === pulseNode) return;
+        const d = Math.hypot(n.x - pulseNode.x, n.y - pulseNode.y);
+        if (d < 120) {
+          const px = pulseNode.x + (n.x - pulseNode.x) * t;
+          const py = pulseNode.y + (n.y - pulseNode.y) * t;
+          ctx.fillStyle = `rgba(184, 115, 51, ${0.6 * (1 - t)})`;
+          ctx.beginPath();
+          ctx.arc(px, py, 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
       });
 
       animId = requestAnimationFrame(draw);
@@ -71,16 +106,22 @@ const NodeNetwork = () => {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  return <canvas ref={canvasRef} className="w-[300px] h-[200px] opacity-60" />;
+  return <canvas ref={canvasRef} className="w-[400px] h-[300px] opacity-80" />;
 };
 
 const Products = () => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true });
+  const heading = useTextScramble("Our Products", { trigger: isInView, speed: 35 });
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3, -3]), { stiffness: 200, damping: 30 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-3, 3]), { stiffness: 200, damping: 30 });
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), { stiffness: 150, damping: 25 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), { stiffness: 150, damping: 25 });
+  const glareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [0, 100]), { stiffness: 150, damping: 25 });
+  const glareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [0, 100]), { stiffness: 150, damping: 25 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current || window.innerWidth < 768) return;
@@ -95,56 +136,71 @@ const Products = () => {
   };
 
   return (
-    <section id="products" className="py-36 md:py-44">
+    <section id="products" className="py-36 md:py-48" ref={sectionRef}>
       <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: sharp }}
-          className="mb-20"
+          className="mb-24"
         >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary/60 mb-4 block">
-            Flagship
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+            // Flagship
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-            Our Products
+          <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+            {heading || "Our Products"}
           </h2>
         </motion.div>
 
         <motion.div
           ref={cardRef}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: sharp }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
           style={{ rotateX, rotateY, transformPerspective: 1200 }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative bg-card border border-border rounded-lg p-8 md:p-14 overflow-hidden max-w-5xl mx-auto"
+          className="relative bg-hero-bg border border-hero-fg/10 rounded-sm p-8 md:p-16 overflow-hidden max-w-5xl mx-auto"
         >
-          {/* Accent top line */}
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+          {/* Glare effect */}
+          <motion.div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none hidden md:block"
+            style={{
+              background: `radial-gradient(600px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(184,115,51,1), transparent 40%)`,
+            }}
+          />
 
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+          {/* Accent lines */}
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-primary/40 via-transparent to-primary/20" />
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-primary/20 via-transparent to-primary/10" />
+
+          {/* Corner marks */}
+          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/20" />
+          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/20" />
+          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/20" />
+          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/20" />
+
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 relative z-10">
             <div className="flex-1">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/60">
                 Flagship Product
               </span>
-              <h3 className="text-3xl md:text-4xl font-bold tracking-tight mt-3 mb-3 text-foreground">
+              <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-hero-fg">
                 Binder OS
               </h3>
-              <p className="text-primary text-sm mb-6 font-medium">
+              <p className="text-primary text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
-              <p className="text-muted-foreground text-[15px] leading-relaxed max-w-xl mb-4">
+              <p className="text-hero-fg/50 text-[15px] leading-[1.8] max-w-xl mb-5">
                 Binder OS is a complete operating system for India's textile SMEs,
                 exporters, and job workers. It replaces fragmented spreadsheets and
                 WhatsApp coordination with a single system of record — covering
                 inventory, job orders, traceability, documentation, and an AI-powered
                 COO Agent that monitors operations through Telegram.
               </p>
-              <p className="text-muted-foreground/60 text-sm italic mb-8">
+              <p className="text-hero-fg/30 text-sm italic mb-10 font-mono text-xs">
                 Built from first-hand experience running a textile factory in Panipat —
                 India's home textile capital.
               </p>
@@ -152,20 +208,20 @@ const Products = () => {
                 href="https://binderos.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-foreground transition-colors duration-300"
+                className="group inline-flex items-center gap-3 text-sm font-medium text-hero-bg bg-primary px-8 py-3.5 rounded-sm hover:bg-primary/90 transition-all duration-300"
               >
-                Explore Binder OS
+                <span>Explore Binder OS</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
               </a>
             </div>
 
             {/* Network visualization */}
-            <div className="hidden md:flex items-center justify-center">
-              <NodeNetwork />
+            <div className="hidden md:flex items-center justify-center shrink-0">
+              <NetworkVis />
             </div>
           </div>
 
-          <p className="mt-14 font-mono text-xs text-muted-foreground/40 tracking-wide">
+          <p className="mt-16 font-mono text-[10px] text-hero-fg/20 tracking-[0.2em] uppercase">
             More products in development.
           </p>
         </motion.div>

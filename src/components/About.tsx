@@ -1,50 +1,66 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { useTextScramble } from "@/hooks/useTextScramble";
 
 const sharp = [0.16, 1, 0.3, 1];
 
 const About = () => {
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headingRef, { once: true });
+  const heading = useTextScramble("About Binder 33 Labs", { trigger: isInView, speed: 30 });
+
   return (
-    <section id="about" className="py-36 md:py-44 relative">
-      {/* Subtle warm background tint */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(35_15%_95%)] to-transparent opacity-50" />
+    <section id="about" className="py-36 md:py-48 relative overflow-hidden">
+      {/* Subtle texture background */}
+      <div className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, hsl(27 52% 46%) 0.5px, transparent 0.5px)`,
+          backgroundSize: "24px 24px",
+        }}
+      />
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: sharp }}
-          className="mb-16"
-        >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary/60 mb-4 block">
-            Who We Are
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-            About Binder 33 Labs
-          </h2>
-        </motion.div>
-
-        <div className="max-w-3xl space-y-8">
-          {/* Pull-quote first paragraph */}
-          <motion.p
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
+        <div ref={headingRef}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: sharp }}
-            className="text-xl md:text-2xl text-foreground leading-relaxed font-medium"
+            transition={{ duration: 0.6, ease: sharp }}
+            className="mb-20"
           >
-            Binder 33 Labs is based in India. The company was founded by a builder
-            who runs both a technology studio and a textile manufacturing business
-            (Creative Home Decor LLP) in Panipat, Haryana. That dual identity —
-            operator and engineer — is central to how we work.
-          </motion.p>
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+              // Who We Are
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+              {heading || "About Binder 33 Labs"}
+            </h2>
+          </motion.div>
+        </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 25 }}
+        <div className="max-w-3xl space-y-10">
+          {/* Pull-quote first paragraph — larger, bolder */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.7, ease: sharp }}
-            className="text-[16px] md:text-[17px] text-muted-foreground leading-relaxed"
+            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <div className="border-l-2 border-primary/30 pl-8">
+              <p className="text-xl md:text-[1.6rem] text-foreground leading-[1.7] font-medium tracking-[-0.01em]">
+                Binder 33 Labs is based in India. The company was founded by a builder
+                who runs both a technology studio and a textile manufacturing business
+                (Creative Home Decor LLP) in Panipat, Haryana. That dual identity —
+                operator and engineer — is central to how we work.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="text-base md:text-[17px] text-muted-foreground leading-[1.8]"
           >
             Our first product, Binder OS, came directly from the frustration of
             running a factory without any real software. But Binder 33 Labs is not
@@ -53,11 +69,11 @@ const About = () => {
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.15, duration: 0.7, ease: sharp }}
-            className="text-[16px] md:text-[17px] text-muted-foreground leading-relaxed"
+            transition={{ delay: 0.15, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="text-base md:text-[17px] text-muted-foreground leading-[1.8]"
           >
             We're a small, focused team. We work with engineers, domain experts,
             and collaborators who care about building things that actually work in
