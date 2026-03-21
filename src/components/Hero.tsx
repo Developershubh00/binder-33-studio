@@ -121,7 +121,7 @@ const ParticleField = () => {
 // Headline with clip-mask reveal effect
 const RevealText = ({ children, delay = 0 }: { children: string; delay?: number }) => {
   return (
-    <span className="inline-block overflow-hidden">
+    <span className="inline-block overflow-hidden pb-[0.15em]">
       <motion.span
         className="inline-block"
         initial={{ y: "110%" }}
