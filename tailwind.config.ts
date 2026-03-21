@@ -14,6 +14,7 @@ export default {
     },
     fontFamily: {
       sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+      mono: ["JetBrains Mono", "monospace"],
     },
     extend: {
       colors: {
@@ -60,6 +61,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        hero: {
+          bg: "hsl(var(--hero-bg))",
+          fg: "hsl(var(--hero-fg))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -68,20 +73,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {

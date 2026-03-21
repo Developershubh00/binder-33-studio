@@ -6,10 +6,14 @@ import Approach from "@/components/Approach";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <CustomCursor />
+      <ScrollProgress />
       <Navbar />
       <Hero />
       <WhatWeDo />
