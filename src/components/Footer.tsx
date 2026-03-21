@@ -27,10 +27,10 @@ const Footer = () => {
             <p className="text-sm font-medium text-foreground/45 tracking-wide">Binder 33 Labs</p>
           </div>
           <nav className="flex flex-wrap gap-10">
-            <a href="#about" className="text-foreground/20 hover:text-foreground/50 transition-colors duration-500 font-mono text-xs tracking-wider">About</a>
-            <a href="#products" className="text-foreground/20 hover:text-foreground/50 transition-colors duration-500 font-mono text-xs tracking-wider">Products</a>
-            <a href="https://binderos.com" target="_blank" rel="noopener noreferrer" className="text-foreground/20 hover:text-foreground/50 transition-colors duration-500 font-mono text-xs tracking-wider">Binder OS</a>
-            <a href="#contact" className="text-foreground/20 hover:text-foreground/50 transition-colors duration-500 font-mono text-xs tracking-wider">Contact</a>
+            <a href="#about" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">About</a>
+            <a href="#products" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Products</a>
+            <a href="https://binderos.com" target="_blank" rel="noopener noreferrer" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Binder OS</a>
+            <a href="#contact" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Contact</a>
           </nav>
         </div>
 
