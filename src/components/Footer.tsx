@@ -35,7 +35,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12">
-          <p className="font-mono text-[10px] text-foreground/10 tracking-[0.3em]">
+          <p className="font-mono text-[10px] text-foreground/20 tracking-[0.3em]">
             © {new Date().getFullYear()} BINDER 33 LABS
           </p>
         </div>

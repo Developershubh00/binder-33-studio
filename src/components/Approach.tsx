@@ -109,7 +109,7 @@ const Approach = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-16"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
               // Philosophy
             </span>
             <h2 className="text-4xl font-bold tracking-tight text-foreground">How We Think</h2>

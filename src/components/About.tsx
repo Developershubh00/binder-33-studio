@@ -42,7 +42,7 @@ const About = () => {
             transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
           >
             <div className="border-l border-foreground/15 pl-8" style={{ boxShadow: '-1px 0 8px rgba(255,255,255,0.03)' }}>
-              <p className="text-xl md:text-[1.6rem] text-foreground/70 leading-[1.7] font-medium tracking-[-0.01em]">
+              <p className="text-xl md:text-[1.6rem] text-foreground/80 leading-[1.7] font-medium tracking-[-0.01em]">
                 Binder 33 Labs is based in India. The company was founded by a builder
                 who runs both a technology studio and a textile manufacturing business
                 (Creative Home Decor LLP) in Panipat, Haryana. That dual identity —

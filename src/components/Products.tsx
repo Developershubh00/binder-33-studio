@@ -202,7 +202,7 @@ const Products = () => {
                 inventory, job orders, traceability, documentation, and an AI-powered
                 COO Agent that monitors operations through Telegram.
               </p>
-              <p className="text-foreground/20 text-sm italic mb-10 font-mono text-xs">
+              <p className="text-foreground/35 text-sm italic mb-10 font-mono text-xs">
                 Built from first-hand experience running a textile factory in Panipat —
                 India's home textile capital.
               </p>
