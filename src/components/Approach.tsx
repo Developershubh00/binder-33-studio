@@ -125,7 +125,7 @@ const Approach = () => {
                 transition={{ delay: i * 0.08, duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="font-mono text-[10px] text-foreground/15">{p.num}</span>
+                  <span className="font-mono text-[10px] text-foreground/25">{p.num}</span>
                   {p.mark}
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-3 tracking-tight">{p.title}</h3>

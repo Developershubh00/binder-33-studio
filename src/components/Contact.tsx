@@ -55,7 +55,7 @@ const Contact = () => {
                 />
               </a>
             </div>
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/60 uppercase">
               Based in Panipat, Haryana, India
             </p>
             <div className="flex gap-6 pt-2">
