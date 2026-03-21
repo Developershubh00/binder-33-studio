@@ -52,6 +52,7 @@ const Navbar = () => {
           className="flex items-center gap-3"
         >
           <img src={binderLogo} alt="Binder 33 Labs" className="w-7 h-7 object-contain" style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.2))' }} />
+          <span className="font-mono text-xs tracking-[0.15em] uppercase text-foreground/50">Binder 33 Labs</span>
         </a>
 
         {/* Desktop */}
