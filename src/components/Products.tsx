@@ -192,7 +192,7 @@ const Products = () => {
               >
                 Binder OS
               </h3>
-              <p className="text-foreground/50 text-sm mb-8 font-medium tracking-wide">
+              <p className="text-foreground/60 text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
               <p className="text-foreground/35 text-[15px] leading-[1.8] max-w-xl mb-5">
