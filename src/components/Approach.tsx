@@ -75,7 +75,7 @@ const Approach = () => {
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-4" ref={headingRef}>
-                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
                   // Philosophy
                 </span>
                 <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight leading-[0.95] text-foreground">
