@@ -75,7 +75,7 @@ const Approach = () => {
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-4" ref={headingRef}>
-                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
                   // Philosophy
                 </span>
                 <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight leading-[0.95] text-foreground">
@@ -109,7 +109,7 @@ const Approach = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-16"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
               // Philosophy
             </span>
             <h2 className="text-4xl font-bold tracking-tight text-foreground">How We Think</h2>
@@ -125,7 +125,7 @@ const Approach = () => {
                 transition={{ delay: i * 0.08, duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="font-mono text-[10px] text-foreground/15">{p.num}</span>
+                  <span className="font-mono text-[10px] text-foreground/25">{p.num}</span>
                   {p.mark}
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-3 tracking-tight">{p.title}</h3>

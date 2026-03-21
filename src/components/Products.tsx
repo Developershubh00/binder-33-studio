@@ -142,7 +142,7 @@ const Products = () => {
           transition={{ duration: 0.6, ease: sharp }}
           className="mb-24"
         >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
             // Flagship
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
@@ -184,7 +184,7 @@ const Products = () => {
 
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 relative z-10">
             <div className="flex-1">
-              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/30">
+              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
                 Flagship Product
               </span>
               <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-foreground"
@@ -192,17 +192,17 @@ const Products = () => {
               >
                 Binder OS
               </h3>
-              <p className="text-foreground/50 text-sm mb-8 font-medium tracking-wide">
+              <p className="text-foreground/60 text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
-              <p className="text-foreground/35 text-[15px] leading-[1.8] max-w-xl mb-5">
+              <p className="text-foreground/50 text-[15px] leading-[1.8] max-w-xl mb-5">
                 Binder OS is a complete operating system for India's textile SMEs,
                 exporters, and job workers. It replaces fragmented spreadsheets and
                 WhatsApp coordination with a single system of record — covering
                 inventory, job orders, traceability, documentation, and an AI-powered
                 COO Agent that monitors operations through Telegram.
               </p>
-              <p className="text-foreground/20 text-sm italic mb-10 font-mono text-xs">
+              <p className="text-foreground/35 text-sm italic mb-10 font-mono text-xs">
                 Built from first-hand experience running a textile factory in Panipat —
                 India's home textile capital.
               </p>

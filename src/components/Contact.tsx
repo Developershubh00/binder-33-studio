@@ -26,7 +26,7 @@ const Contact = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-24"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/35 mb-5 block">
               // Connect
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
@@ -55,7 +55,7 @@ const Contact = () => {
                 />
               </a>
             </div>
-            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase">
+            <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/60 uppercase">
               Based in Panipat, Haryana, India
             </p>
             <div className="flex gap-6 pt-2">
