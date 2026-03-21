@@ -204,7 +204,7 @@ const Hero = () => {
           <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-foreground glow-text">
             <RevealText delay={0.6}>We Build Things</RevealText>
             <br />
-            <span className="text-foreground/60">
+            <span className="text-foreground/80">
               <RevealText delay={0.8}>That Work</RevealText>
             </span>
           </h1>
@@ -213,7 +213,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.6 }}
-            className="mt-12 text-foreground/30 max-w-2xl leading-relaxed font-mono text-sm md:text-base"
+            className="mt-12 text-foreground/50 max-w-2xl leading-relaxed font-mono text-sm md:text-base font-medium"
           >
             <ScrambleReveal
               text="Binder 33 Labs is a technology company that builds software products, takes on hard problems, and ships solutions. Based in India. Building for the world."
