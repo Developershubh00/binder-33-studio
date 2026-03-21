@@ -58,19 +58,19 @@ const PageIntro = ({ onComplete }: { onComplete: () => void }) => {
               animate={{ opacity: phase >= 1 ? 1 : 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <svg width="200" height="40" viewBox="0 0 260 50" className="overflow-visible">
+              <svg width="280" height="40" viewBox="0 0 360 50" className="overflow-visible">
                 <text
-                  x="125"
+                  x="180"
                   y="26"
                   fontFamily="'Courier New', monospace"
-                  fontSize="38"
-                  letterSpacing="10"
+                  fontSize="32"
+                  letterSpacing="8"
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="rgba(255,255,255,0.85)"
                   style={{ textShadow: '0 0 15px rgba(255,255,255,0.2)' }}
                 >
-                  BINDER
+                  BINDER 33 LABS
                 </text>
               </svg>
             </motion.div>
