@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import binderLogo from "@/assets/binder-logo.png";
 
 const navItems = [
   { label: "What We Do", href: "#what-we-do" },
