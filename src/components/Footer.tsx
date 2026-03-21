@@ -24,7 +24,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="flex items-center gap-4">
             <div className="w-2 h-2 bg-foreground/30 rounded-full" style={{ boxShadow: '0 0 6px rgba(255,255,255,0.15)' }} />
-            <p className="text-sm font-medium text-foreground/30 tracking-wide">Binder 33 Labs</p>
+            <p className="text-sm font-medium text-foreground/45 tracking-wide">Binder 33 Labs</p>
           </div>
           <nav className="flex flex-wrap gap-10">
             <a href="#about" className="text-foreground/20 hover:text-foreground/50 transition-colors duration-500 font-mono text-xs tracking-wider">About</a>
