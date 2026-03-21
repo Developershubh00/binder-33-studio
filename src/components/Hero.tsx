@@ -200,24 +200,6 @@ const Hero = () => {
         className="container mx-auto px-6 relative z-10"
       >
         <div className="max-w-5xl">
-          {/* Logo + Lab identifier */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-4 mb-10"
-          >
-            <img
-              src={binderLogo}
-              alt="Binder 33 Labs"
-              className="w-10 h-10 object-contain"
-              style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.2))' }}
-            />
-            <div className="h-px w-8 bg-foreground/15" style={{ boxShadow: '0 0 6px rgba(255,255,255,0.08)' }} />
-            <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-foreground/30">
-              Binder 33 Labs
-            </span>
-          </motion.div>
 
           <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-foreground glow-text">
             <RevealText delay={0.6}>We Build Things</RevealText>

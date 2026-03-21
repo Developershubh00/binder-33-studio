@@ -49,10 +49,9 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         <a
           href="#"
-          className="flex items-center gap-2.5 font-semibold text-sm tracking-[0.1em] uppercase text-foreground/60 hover:text-foreground/90 transition-colors duration-500"
+          className="flex items-center gap-3"
         >
-          <img src={binderLogo} alt="Binder 33 Labs" className="w-6 h-6 object-contain" style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.15))' }} />
-          <span>B33L</span>
+          <img src={binderLogo} alt="Binder 33 Labs" className="w-7 h-7 object-contain" style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.2))' }} />
         </a>
 
         {/* Desktop */}
