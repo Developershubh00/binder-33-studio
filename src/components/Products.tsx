@@ -184,7 +184,7 @@ const Products = () => {
 
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 relative z-10">
             <div className="flex-1">
-              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/30">
+              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
                 Flagship Product
               </span>
               <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-foreground"
