@@ -195,7 +195,7 @@ const Products = () => {
               <p className="text-foreground/60 text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
-              <p className="text-foreground/35 text-[15px] leading-[1.8] max-w-xl mb-5">
+              <p className="text-foreground/50 text-[15px] leading-[1.8] max-w-xl mb-5">
                 Binder OS is a complete operating system for India's textile SMEs,
                 exporters, and job workers. It replaces fragmented spreadsheets and
                 WhatsApp coordination with a single system of record — covering
