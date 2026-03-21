@@ -4,7 +4,7 @@ import { useTextScramble } from "@/hooks/useTextScramble";
 
 const sharp = [0.16, 1, 0.3, 1];
 
-// Animated network visualization — larger and more impressive
+// Network visualization with white glowing nodes
 const NetworkVis = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -46,13 +46,13 @@ const NetworkVis = () => {
         if (n.y < 15 || n.y > h - 15) n.vy *= -1;
       });
 
-      // Draw connections
+      // Draw connections — white
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
           if (d < 120) {
-            const alpha = (1 - d / 120) * 0.15;
-            ctx.strokeStyle = `rgba(184, 115, 51, ${alpha})`;
+            const alpha = (1 - d / 120) * 0.1;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
             ctx.lineWidth = nodes[i].type === "hub" || nodes[j].type === "hub" ? 1 : 0.5;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -62,26 +62,25 @@ const NetworkVis = () => {
         }
       }
 
-      // Draw nodes
+      // Draw nodes — white with glow
       nodes.forEach(n => {
         const glow = 0.3 + Math.sin(n.phase) * 0.2;
         const r = n.type === "hub" ? n.r * 1.5 : n.r;
 
-        // Glow
         if (n.type === "hub") {
-          ctx.fillStyle = `rgba(184, 115, 51, ${glow * 0.15})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${glow * 0.08})`;
           ctx.beginPath();
-          ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
+          ctx.arc(n.x, n.y, r * 5, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        ctx.fillStyle = `rgba(184, 115, 51, ${glow + 0.2})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${glow + 0.2})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      // Data pulse effect along connections occasionally
+      // Data pulse
       const time = Date.now() * 0.001;
       const pulseIdx = Math.floor(time * 0.5) % nodes.length;
       const pulseNode = nodes[pulseIdx];
@@ -92,7 +91,7 @@ const NetworkVis = () => {
         if (d < 120) {
           const px = pulseNode.x + (n.x - pulseNode.x) * t;
           const py = pulseNode.y + (n.y - pulseNode.y) * t;
-          ctx.fillStyle = `rgba(184, 115, 51, ${0.6 * (1 - t)})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.5 * (1 - t)})`;
           ctx.beginPath();
           ctx.arc(px, py, 2, 0, Math.PI * 2);
           ctx.fill();
@@ -106,7 +105,7 @@ const NetworkVis = () => {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  return <canvas ref={canvasRef} className="w-[400px] h-[300px] opacity-80" />;
+  return <canvas ref={canvasRef} className="w-[400px] h-[300px] opacity-70" />;
 };
 
 const Products = () => {
@@ -120,8 +119,6 @@ const Products = () => {
 
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), { stiffness: 150, damping: 25 });
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), { stiffness: 150, damping: 25 });
-  const glareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [0, 100]), { stiffness: 150, damping: 25 });
-  const glareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [0, 100]), { stiffness: 150, damping: 25 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current || window.innerWidth < 768) return;
@@ -145,10 +142,10 @@ const Products = () => {
           transition={{ duration: 0.6, ease: sharp }}
           className="mb-24"
         >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
             // Flagship
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
             {heading || "Our Products"}
           </h2>
         </motion.div>
@@ -162,45 +159,50 @@ const Products = () => {
           style={{ rotateX, rotateY, transformPerspective: 1200 }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative bg-hero-bg border border-hero-fg/10 rounded-sm p-8 md:p-16 overflow-hidden max-w-5xl mx-auto"
+          className="relative border border-foreground/8 rounded-sm p-8 md:p-16 overflow-hidden max-w-5xl mx-auto"
+          id="product-card"
         >
-          {/* Glare effect */}
-          <motion.div
-            className="absolute inset-0 opacity-[0.03] pointer-events-none hidden md:block"
-            style={{
-              background: `radial-gradient(600px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(184,115,51,1), transparent 40%)`,
-            }}
-          />
+          {/* Depth glow background */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            background: 'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(255,255,255,0.02) 0%, transparent 60%)'
+          }} />
 
-          {/* Accent lines */}
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-primary/40 via-transparent to-primary/20" />
-          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-primary/20 via-transparent to-primary/10" />
+          {/* Top and bottom glow lines */}
+          <div className="absolute top-0 left-0 w-full h-px" style={{
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)',
+            boxShadow: '0 0 10px rgba(255,255,255,0.03)',
+          }} />
+          <div className="absolute bottom-0 left-0 w-full h-px" style={{
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)',
+          }} />
 
           {/* Corner marks */}
-          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/20" />
-          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/20" />
-          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/20" />
-          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/20" />
+          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-foreground/10" />
+          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-foreground/10" />
+          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10" />
+          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10" />
 
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 relative z-10">
             <div className="flex-1">
-              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/60">
+              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/30">
                 Flagship Product
               </span>
-              <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-hero-fg">
+              <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-foreground"
+                style={{ textShadow: '0 0 30px rgba(255,255,255,0.1)' }}
+              >
                 Binder OS
               </h3>
-              <p className="text-primary text-sm mb-8 font-medium tracking-wide">
+              <p className="text-foreground/50 text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
-              <p className="text-hero-fg/50 text-[15px] leading-[1.8] max-w-xl mb-5">
+              <p className="text-foreground/35 text-[15px] leading-[1.8] max-w-xl mb-5">
                 Binder OS is a complete operating system for India's textile SMEs,
                 exporters, and job workers. It replaces fragmented spreadsheets and
                 WhatsApp coordination with a single system of record — covering
                 inventory, job orders, traceability, documentation, and an AI-powered
                 COO Agent that monitors operations through Telegram.
               </p>
-              <p className="text-hero-fg/30 text-sm italic mb-10 font-mono text-xs">
+              <p className="text-foreground/20 text-sm italic mb-10 font-mono text-xs">
                 Built from first-hand experience running a textile factory in Panipat —
                 India's home textile capital.
               </p>
@@ -208,20 +210,20 @@ const Products = () => {
                 href="https://binderos.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 text-sm font-medium text-hero-bg bg-primary px-8 py-3.5 rounded-sm hover:bg-primary/90 transition-all duration-300"
+                className="group inline-flex items-center gap-3 text-sm font-medium text-background bg-foreground/90 px-8 py-3.5 rounded-sm hover:bg-foreground transition-all duration-300"
+                style={{ boxShadow: '0 0 20px rgba(255,255,255,0.1)' }}
               >
                 <span>Explore Binder OS</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
               </a>
             </div>
 
-            {/* Network visualization */}
             <div className="hidden md:flex items-center justify-center shrink-0">
               <NetworkVis />
             </div>
           </div>
 
-          <p className="mt-16 font-mono text-[10px] text-hero-fg/20 tracking-[0.2em] uppercase">
+          <p className="mt-16 font-mono text-[10px] text-foreground/15 tracking-[0.2em] uppercase">
             More products in development.
           </p>
         </motion.div>

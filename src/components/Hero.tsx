@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const sharp = [0.16, 1, 0.3, 1] as const;
 
-// Particle constellation background
+// Deep-space particle field with white glow — matching logo aesthetic
 const ParticleField = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
@@ -32,15 +32,16 @@ const ParticleField = () => {
     };
     window.addEventListener("mousemove", onMouse);
 
-    // Particles
-    const count = Math.min(Math.floor(w * h / 8000), 180);
+    // Particles — white/silver tones for depth
+    const count = Math.min(Math.floor(w * h / 10000), 140);
     const particles = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      size: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 1.5 + 0.3,
       pulse: Math.random() * Math.PI * 2,
+      brightness: 0.3 + Math.random() * 0.5,
     }));
 
     const draw = () => {
@@ -52,7 +53,7 @@ const ParticleField = () => {
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-        p.pulse += 0.01;
+        p.pulse += 0.008;
 
         if (p.x < 0) p.x = w;
         if (p.x > w) p.x = 0;
@@ -63,29 +64,37 @@ const ParticleField = () => {
         const dx = p.x - mx;
         const dy = p.y - my;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150 * 0.5;
+        if (dist < 180) {
+          const force = (180 - dist) / 180 * 0.4;
           p.x += (dx / dist) * force;
           p.y += (dy / dist) * force;
         }
 
-        const alpha = 0.2 + Math.sin(p.pulse) * 0.15;
-        ctx.fillStyle = `rgba(184, 115, 51, ${alpha})`;
+        const alpha = (0.15 + Math.sin(p.pulse) * 0.1) * p.brightness;
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
+
+        // Subtle glow on brighter particles
+        if (p.brightness > 0.6) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.1})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
       });
 
-      // Connect nearby particles
-      ctx.lineWidth = 0.5;
+      // Connect nearby particles with faint white lines
+      ctx.lineWidth = 0.4;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const d = dx * dx + dy * dy;
-          if (d < 14400) { // 120px
-            const alpha = (1 - d / 14400) * 0.08;
-            ctx.strokeStyle = `rgba(184, 115, 51, ${alpha})`;
+          if (d < 12000) {
+            const alpha = (1 - d / 12000) * 0.04;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -93,15 +102,6 @@ const ParticleField = () => {
           }
         }
       }
-
-      // Horizontal scan line
-      const scanY = (Date.now() * 0.03) % h;
-      const gradient = ctx.createLinearGradient(0, scanY - 2, 0, scanY + 2);
-      gradient.addColorStop(0, "rgba(184, 115, 51, 0)");
-      gradient.addColorStop(0.5, "rgba(184, 115, 51, 0.03)");
-      gradient.addColorStop(1, "rgba(184, 115, 51, 0)");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, scanY - 30, w, 60);
 
       animId = requestAnimationFrame(draw);
     };
@@ -148,23 +148,7 @@ const ScrambleReveal = ({ text, delay = 0 }: { text: string; delay?: number }) =
     if (!started) return;
     let frame = 0;
     const totalFrames = text.length * 2;
-    let rafId: number;
 
-    const update = () => {
-      frame++;
-      const revealed = Math.floor((frame / totalFrames) * text.length);
-      let result = "";
-      for (let i = 0; i < text.length; i++) {
-        if (text[i] === " ") result += " ";
-        else if (i < revealed) result += text[i];
-        else result += chars[Math.floor(Math.random() * chars.length)];
-      }
-      setDisplay(result);
-      if (frame < totalFrames) rafId = requestAnimationFrame(update);
-      else setDisplay(text);
-    };
-
-    // Use interval for consistent speed
     const interval = setInterval(() => {
       frame++;
       const revealed = Math.floor((frame / totalFrames) * text.length);
@@ -202,19 +186,13 @@ const Hero = () => {
   const scale = useTransform(scrollYProgress, [0, 0.7], [1, 0.96]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-hero-bg">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ParticleField />
 
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(184,115,51,1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(184,115,51,1) 1px, transparent 1px)
-          `,
-          backgroundSize: "80px 80px",
-        }}
-      />
+      {/* Radial depth glow — center of screen */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,255,255,0.015) 0%, transparent 70%)'
+      }} />
 
       <motion.div
         style={{ opacity, y, scale }}
@@ -226,21 +204,22 @@ const Hero = () => {
             initial={{ width: 0 }}
             animate={{ width: 60 }}
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-primary mb-10 origin-left"
+            className="h-px bg-foreground/20 mb-10 origin-left"
+            style={{ boxShadow: '0 0 8px rgba(255,255,255,0.1)' }}
           />
           <motion.p
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: sharp }}
-            className="font-mono text-[11px] tracking-[0.4em] uppercase text-primary/50 mb-10"
+            className="font-mono text-[11px] tracking-[0.4em] uppercase text-foreground/30 mb-10"
           >
             Binder 33 Labs
           </motion.p>
 
-          <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-hero-fg">
+          <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-foreground glow-text">
             <RevealText delay={0.6}>We Build Things</RevealText>
             <br />
-            <span className="text-primary">
+            <span className="text-foreground/60">
               <RevealText delay={0.8}>That Work</RevealText>
             </span>
           </h1>
@@ -249,7 +228,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.6 }}
-            className="mt-12 text-lg md:text-xl text-hero-fg/50 max-w-2xl leading-relaxed font-mono text-sm md:text-base"
+            className="mt-12 text-foreground/30 max-w-2xl leading-relaxed font-mono text-sm md:text-base"
           >
             <ScrambleReveal
               text="Binder 33 Labs is a technology company that builds software products, takes on hard problems, and ships solutions. Based in India. Building for the world."
@@ -262,9 +241,9 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3, duration: 0.6 }}
-            className="group inline-flex items-center gap-4 mt-14 text-sm text-hero-fg/70 hover:text-primary transition-colors duration-500 relative"
+            className="group inline-flex items-center gap-4 mt-14 text-sm text-foreground/40 hover:text-foreground/80 transition-colors duration-500 relative"
           >
-            <span className="h-px w-8 bg-current transition-all duration-500 group-hover:w-12" />
+            <span className="h-px w-8 bg-current transition-all duration-500 group-hover:w-12" style={{ boxShadow: '0 0 6px rgba(255,255,255,0.1)' }} />
             <span className="font-mono text-xs tracking-[0.2em] uppercase">See Our Work</span>
             <motion.span
               className="inline-block"
@@ -283,16 +262,18 @@ const Hero = () => {
           transition={{ delay: 2.5, duration: 1 }}
           className="absolute bottom-12 right-6 hidden lg:block"
         >
-          <div className="font-mono text-[10px] text-hero-fg/15 space-y-1 text-right">
+          <div className="font-mono text-[10px] text-foreground/10 space-y-1 text-right">
             <div>29.3919° N</div>
             <div>76.9681° E</div>
-            <div className="text-primary/30">PANIPAT, IN</div>
+            <div className="text-foreground/20">PANIPAT, IN</div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Gradient transition to light */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent" />
+      {/* Bottom gradient — seamless transition (same bg color) */}
+      <div className="absolute bottom-0 left-0 right-0 h-32">
+        <div className="section-divider w-full absolute bottom-16" />
+      </div>
     </section>
   );
 };

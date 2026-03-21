@@ -26,10 +26,10 @@ const Contact = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-24"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
               // Connect
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
               {heading || "Get in Touch"}
             </h2>
           </motion.div>
@@ -46,10 +46,13 @@ const Contact = () => {
             <div>
               <a
                 href="mailto:info@binder33labs.com"
-                className="group text-2xl md:text-4xl font-bold text-foreground hover:text-primary transition-colors duration-500 relative inline-block tracking-tight"
+                className="group text-2xl md:text-4xl font-bold text-foreground hover:text-foreground/70 transition-colors duration-500 relative inline-block tracking-tight"
+                style={{ textShadow: '0 0 20px rgba(255,255,255,0.05)' }}
               >
                 info@binder33labs.com
-                <span className="absolute -bottom-2 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                <span className="absolute -bottom-2 left-0 w-full h-px bg-foreground/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+                  style={{ boxShadow: '0 0 8px rgba(255,255,255,0.1)' }}
+                />
               </a>
             </div>
             <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase">
@@ -60,7 +63,7 @@ const Contact = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground/40 hover:text-primary transition-colors duration-500"
+                className="text-foreground/20 hover:text-foreground/60 transition-colors duration-500"
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -71,7 +74,7 @@ const Contact = () => {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground/40 hover:text-primary transition-colors duration-500"
+                className="text-foreground/20 hover:text-foreground/60 transition-colors duration-500"
                 aria-label="X / Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -94,7 +97,7 @@ const Contact = () => {
               { type: "email", placeholder: "Email", key: "email" as const },
             ].map((field) => (
               <div key={field.key} className="relative group">
-                <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground/30 mb-2 block">
+                <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/15 mb-2 block">
                   {field.placeholder}
                 </label>
                 <input
@@ -103,13 +106,15 @@ const Contact = () => {
                   value={form[field.key]}
                   onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                   required
-                  className="w-full bg-transparent border-b border-border/50 px-0 py-3 text-[15px] text-foreground placeholder:text-muted-foreground/20 focus:outline-none transition-all duration-500 peer"
+                  className="w-full bg-transparent border-b border-foreground/10 px-0 py-3 text-[15px] text-foreground placeholder:text-foreground/15 focus:outline-none transition-all duration-500 peer"
                 />
-                <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 peer-focus:scale-x-100 transition-transform duration-700 origin-left" />
+                <span className="absolute bottom-0 left-0 w-full h-px bg-foreground/40 scale-x-0 peer-focus:scale-x-100 transition-transform duration-700 origin-left"
+                  style={{ boxShadow: '0 0 6px rgba(255,255,255,0.08)' }}
+                />
               </div>
             ))}
             <div className="relative group">
-              <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground/30 mb-2 block">
+              <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/15 mb-2 block">
                 Message
               </label>
               <textarea
@@ -118,13 +123,16 @@ const Contact = () => {
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 required
-                className="w-full bg-transparent border-b border-border/50 px-0 py-3 text-[15px] text-foreground placeholder:text-muted-foreground/20 focus:outline-none resize-none transition-all duration-500 peer"
+                className="w-full bg-transparent border-b border-foreground/10 px-0 py-3 text-[15px] text-foreground placeholder:text-foreground/15 focus:outline-none resize-none transition-all duration-500 peer"
               />
-              <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 peer-focus:scale-x-100 transition-transform duration-700 origin-left" />
+              <span className="absolute bottom-0 left-0 w-full h-px bg-foreground/40 scale-x-0 peer-focus:scale-x-100 transition-transform duration-700 origin-left"
+                style={{ boxShadow: '0 0 6px rgba(255,255,255,0.08)' }}
+              />
             </div>
             <button
               type="submit"
-              className="group inline-flex items-center gap-3 text-sm font-medium text-primary-foreground bg-primary px-8 py-3.5 rounded-sm hover:bg-primary/90 transition-all duration-300 mt-4"
+              className="group inline-flex items-center gap-3 text-sm font-medium text-background bg-foreground/90 px-8 py-3.5 rounded-sm hover:bg-foreground transition-all duration-300 mt-4"
+              style={{ boxShadow: '0 0 15px rgba(255,255,255,0.08)' }}
             >
               Send Message
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>

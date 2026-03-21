@@ -6,50 +6,53 @@
 
 @layer base {
   :root {
-    /* Dark hero palette */
-    --hero-bg: 0 0% 7%;
-    --hero-fg: 40 10% 92%;
+    /* Full dark palette — depth-driven like the logo */
+    --hero-bg: 0 0% 4%;
+    --hero-fg: 0 0% 92%;
 
-    /* Light section palette */
-    --background: 45 10% 97%;
-    --foreground: 0 0% 12%;
+    /* All sections are dark now */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 90%;
 
-    --card: 45 10% 95%;
-    --card-foreground: 0 0% 12%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 90%;
 
-    /* Muted copper accent */
-    --primary: 27 52% 46%;
-    --primary-foreground: 0 0% 100%;
+    /* White/light accent — like the logo's glow */
+    --primary: 0 0% 85%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 40 8% 90%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 80%;
 
-    --muted: 40 8% 92%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 50%;
 
-    --accent: 27 52% 46%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 90%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 8% 88%;
-    --input: 40 8% 88%;
-    --ring: 27 52% 46%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 60%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 7%;
-    --sidebar-foreground: 40 10% 85%;
-    --sidebar-primary: 27 52% 46%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 40 10% 85%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 27 52% 46%;
+    /* Glow color for depth effects */
+    --glow: 0 0% 100%;
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 0 0% 85%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 0 0% 60%;
   }
 }
 
@@ -68,24 +71,25 @@
   }
 }
 
-/* Custom cursor */
+/* Custom cursor — white glow */
 .custom-cursor {
   position: fixed;
   width: 8px;
   height: 8px;
-  background: hsl(27 52% 46%);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
   transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
 }
 
 .custom-cursor-ring {
   position: fixed;
   width: 36px;
   height: 36px;
-  border: 1px solid hsl(27 52% 46% / 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -97,16 +101,18 @@
 .custom-cursor-ring.hovering {
   width: 56px;
   height: 56px;
-  border-color: hsl(27 52% 46% / 0.6);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
-/* Scroll progress bar */
+/* Scroll progress bar — white glow */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
-  background: hsl(27 52% 46%);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
   z-index: 9999;
   transform-origin: left;
 }
@@ -120,19 +126,48 @@
   100% { background-position: 0% 0%; }
 }
 
-/* Coming soon shimmer */
+/* Coming soon shimmer — ethereal */
 @keyframes shimmer {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
 }
 
 .shimmer-tag {
-  animation: shimmer 2.5s ease-in-out infinite;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Glow pulse — matching logo aesthetic */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05), 0 0 30px rgba(255, 255, 255, 0.02);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.04);
+  }
+}
+
+@keyframes text-glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15), 0 0 40px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.1), 0 0 100px rgba(255, 255, 255, 0.05);
+  }
+}
+
+.glow-text {
+  animation: text-glow-pulse 3.2s ease-in-out infinite;
 }
 
 /* Mono accent */
 .font-mono-accent {
   font-family: 'JetBrains Mono', monospace;
+}
+
+/* Section divider glow */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
 }
 
 /* Reduced motion */
