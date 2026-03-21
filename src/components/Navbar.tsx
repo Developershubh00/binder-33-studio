@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { label: "What We Do", href: "#what-we-do" },
@@ -12,9 +12,25 @@ const navItems = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 80);
+
+      // Track active section
+      const sections = navItems.map(item => document.querySelector(item.href));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveSection(navItems[i].href);
+            break;
+          }
+        }
+      }
+    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -23,34 +39,47 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      transition={{ duration: 0.6, delay: 2.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-sm"
+          ? "bg-background/80 backdrop-blur-2xl border-b border-border/50"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         <a
           href="#"
-          className={`font-semibold text-lg tracking-tight transition-colors duration-500 ${
-            scrolled ? "text-foreground" : "text-hero-fg"
+          className={`font-semibold text-sm tracking-[0.1em] uppercase transition-colors duration-700 ${
+            scrolled ? "text-foreground" : "text-hero-fg/80"
           }`}
         >
-          Binder 33 Labs
+          B33L
         </a>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={`text-sm transition-colors duration-500 hover:text-primary ${
-                scrolled ? "text-muted-foreground" : "text-hero-fg/60 hover:text-hero-fg"
+              className={`relative text-xs font-mono tracking-wider uppercase transition-colors duration-500 ${
+                scrolled
+                  ? activeSection === item.href
+                    ? "text-primary"
+                    : "text-muted-foreground/60 hover:text-foreground"
+                  : activeSection === item.href
+                    ? "text-primary"
+                    : "text-hero-fg/40 hover:text-hero-fg/80"
               }`}
             >
               {item.label}
+              {activeSection === item.href && (
+                <motion.span
+                  layoutId="nav-indicator"
+                  className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                />
+              )}
             </a>
           ))}
         </div>
@@ -61,40 +90,45 @@ const Navbar = () => {
           className={`md:hidden p-2 transition-colors duration-500 ${scrolled ? "text-foreground" : "text-hero-fg"}`}
           aria-label="Toggle menu"
         >
-          <div className="w-5 flex flex-col gap-1">
-            <span className={`block h-px transition-all duration-200 ${scrolled ? "bg-foreground" : "bg-hero-fg"} ${mobileOpen ? "rotate-45 translate-y-[3px]" : ""}`} />
-            <span className={`block h-px transition-all duration-200 ${scrolled ? "bg-foreground" : "bg-hero-fg"} ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-px transition-all duration-200 ${scrolled ? "bg-foreground" : "bg-hero-fg"} ${mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""}`} />
+          <div className="w-5 flex flex-col gap-1.5">
+            <span className={`block h-px transition-all duration-300 ${scrolled ? "bg-foreground" : "bg-hero-fg"} ${mobileOpen ? "rotate-45 translate-y-[4px]" : ""}`} />
+            <span className={`block h-px transition-all duration-300 ${scrolled ? "bg-foreground" : "bg-hero-fg"} ${mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""}`} />
           </div>
         </button>
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ease: [0.16, 1, 0.3, 1] }}
-          className={`md:hidden backdrop-blur-xl border-b border-border ${
-            scrolled ? "bg-background/95" : "bg-hero-bg/95"
-          }`}
-        >
-          <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`text-sm transition-colors ${
-                  scrolled ? "text-muted-foreground hover:text-foreground" : "text-hero-fg/60 hover:text-hero-fg"
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
+            className={`md:hidden overflow-hidden backdrop-blur-2xl border-b border-border/50 ${
+              scrolled ? "bg-background/95" : "bg-hero-bg/95"
+            }`}
+          >
+            <div className="container mx-auto px-6 py-6 flex flex-col gap-5">
+              {navItems.map((item, i) => (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  className={`text-sm font-mono tracking-wider uppercase transition-colors ${
+                    scrolled ? "text-muted-foreground hover:text-foreground" : "text-hero-fg/50 hover:text-hero-fg"
+                  }`}
+                >
+                  {item.label}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };
