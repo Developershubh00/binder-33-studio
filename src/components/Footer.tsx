@@ -14,7 +14,7 @@ const Footer = () => {
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
           className="mb-20"
         >
-          <p className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground/50 leading-tight max-w-2xl glow-text">
+          <p className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground/65 leading-tight max-w-2xl glow-text">
             We build things<br />that work.
           </p>
         </motion.div>
