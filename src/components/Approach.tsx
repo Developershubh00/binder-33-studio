@@ -6,7 +6,7 @@ const principles = [
   {
     num: "01",
     mark: (
-      <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary/40">
+      <svg width="24" height="24" viewBox="0 0 24 24" className="text-foreground/20">
         <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1" />
         <circle cx="12" cy="12" r="1.5" fill="currentColor" />
       </svg>
@@ -18,7 +18,7 @@ const principles = [
   {
     num: "02",
     mark: (
-      <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary/40">
+      <svg width="24" height="24" viewBox="0 0 24 24" className="text-foreground/20">
         <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="1" />
         <line x1="4" y1="8" x2="20" y2="8" stroke="currentColor" strokeWidth="1" />
         <line x1="4" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="1" />
@@ -31,7 +31,7 @@ const principles = [
   {
     num: "03",
     mark: (
-      <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary/40">
+      <svg width="24" height="24" viewBox="0 0 24 24" className="text-foreground/20">
         <polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5" fill="none" stroke="currentColor" strokeWidth="1" />
       </svg>
     ),
@@ -42,7 +42,7 @@ const principles = [
   {
     num: "04",
     mark: (
-      <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary/40">
+      <svg width="24" height="24" viewBox="0 0 24 24" className="text-foreground/20">
         <rect x="4" y="4" width="7" height="7" fill="none" stroke="currentColor" strokeWidth="1" />
         <rect x="13" y="13" width="7" height="7" fill="none" stroke="currentColor" strokeWidth="1" />
         <line x1="11" y1="7.5" x2="13" y2="16.5" stroke="currentColor" strokeWidth="0.5" />
@@ -69,21 +69,19 @@ const Approach = () => {
 
   return (
     <section id="approach" ref={sectionRef} className="relative">
-      {/* Desktop: sticky scroll with dramatic reveals */}
+      {/* Desktop: sticky scroll */}
       <div className="hidden md:block" style={{ height: `${(principles.length + 1) * 100}vh` }}>
         <div className="sticky top-0 min-h-screen flex items-center overflow-hidden">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-12 gap-8">
-              {/* Left: Sticky heading */}
               <div className="col-span-4" ref={headingRef}>
-                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
                   // Philosophy
                 </span>
-                <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight leading-[0.95]">
+                <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight leading-[0.95] text-foreground">
                   {heading || "How We Think"}
                 </h2>
 
-                {/* Progress indicator */}
                 <div className="mt-12 flex flex-col gap-2">
                   {principles.map((p, i) => (
                     <ProgressDot key={i} index={i} total={principles.length} progress={scrollYProgress} />
@@ -91,7 +89,6 @@ const Approach = () => {
                 </div>
               </div>
 
-              {/* Right: Cycling principles */}
               <div className="col-span-8 relative">
                 {principles.map((p, i) => (
                   <PrincipleCard key={i} principle={p} index={i} total={principles.length} progress={scrollYProgress} />
@@ -112,10 +109,10 @@ const Approach = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-16"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
               // Philosophy
             </span>
-            <h2 className="text-4xl font-bold tracking-tight">How We Think</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">How We Think</h2>
           </motion.div>
 
           <div className="space-y-16 max-w-2xl">
@@ -128,7 +125,7 @@ const Approach = () => {
                 transition={{ delay: i * 0.08, duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="font-mono text-[10px] text-primary/30">{p.num}</span>
+                  <span className="font-mono text-[10px] text-foreground/15">{p.num}</span>
                   {p.mark}
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-3 tracking-tight">{p.title}</h3>
@@ -155,13 +152,13 @@ const ProgressDot = ({
   const peak = (index + 0.5) / (total + 1);
   const end = (index + 1.5) / (total + 1);
 
-  const opacity = useTransform(progress, [start, peak, end], [0.15, 1, 0.15]);
+  const opacity = useTransform(progress, [start, peak, end], [0.1, 0.8, 0.1]);
   const width = useTransform(progress, [start, peak, end], [16, 40, 16]);
 
   return (
     <motion.div
-      className="h-[2px] bg-primary rounded-full origin-left"
-      style={{ opacity, width }}
+      className="h-[1px] bg-foreground rounded-full origin-left"
+      style={{ opacity, width, boxShadow: '0 0 4px rgba(255,255,255,0.1)' }}
     />
   );
 };
@@ -192,13 +189,13 @@ const PrincipleCard = ({
     >
       <div className="max-w-lg">
         <div className="flex items-center gap-4 mb-6">
-          <span className="font-mono text-[10px] text-primary/30 tracking-[0.3em]">{principle.num}</span>
+          <span className="font-mono text-[10px] text-foreground/15 tracking-[0.3em]">{principle.num}</span>
           {principle.mark}
         </div>
         <h3 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight mb-5 leading-tight">
           {principle.title}
         </h3>
-        <div className="w-10 h-px bg-primary/30 mb-5" />
+        <div className="w-10 h-px bg-foreground/15 mb-5" style={{ boxShadow: '0 0 6px rgba(255,255,255,0.05)' }} />
         <p className="text-base text-muted-foreground leading-[1.8]">
           {principle.description}
         </p>

@@ -42,40 +42,44 @@ const Card = ({ card, i }: { card: typeof cards[0]; i: number }) => {
       className="relative group"
       style={{ perspective: 1000 }}
     >
-      {/* Animated border trace */}
-      <div className="absolute inset-0 rounded-sm overflow-hidden">
+      <div
+        className="relative bg-card border border-border rounded-sm p-8 md:p-10 h-full transition-all duration-700"
+        style={{
+          boxShadow: hovered
+            ? '0 0 30px rgba(255,255,255,0.03), 0 0 60px rgba(255,255,255,0.01), inset 0 1px 0 rgba(255,255,255,0.05)'
+            : 'inset 0 1px 0 rgba(255,255,255,0.02)',
+          borderColor: hovered ? 'rgba(255,255,255,0.12)' : undefined,
+        }}
+      >
+        {/* Top glow line */}
         <div
-          className="absolute inset-0 rounded-sm transition-opacity duration-700"
+          className="absolute top-0 left-8 right-8 h-px transition-all duration-700"
           style={{
-            opacity: hovered ? 1 : 0,
-            background: `
-              linear-gradient(90deg, hsl(27 52% 46% / 0.5) 0%, transparent 50%) top/100% 1px no-repeat,
-              linear-gradient(90deg, transparent 50%, hsl(27 52% 46% / 0.5) 100%) bottom/100% 1px no-repeat,
-              linear-gradient(180deg, hsl(27 52% 46% / 0.5) 0%, transparent 50%) left/1px 100% no-repeat,
-              linear-gradient(180deg, transparent 50%, hsl(27 52% 46% / 0.5) 100%) right/1px 100% no-repeat
-            `,
+            background: hovered
+              ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)'
+              : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+            boxShadow: hovered ? '0 0 10px rgba(255,255,255,0.05)' : 'none',
           }}
         />
-      </div>
-
-      <div className="relative bg-card/50 backdrop-blur-sm border border-border/60 rounded-sm p-8 md:p-10 h-full transition-all duration-500 group-hover:border-primary/20 group-hover:bg-card/80">
-        {/* Top accent line */}
-        <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/0 group-hover:via-primary/30 to-transparent transition-all duration-700" />
 
         <div className="flex items-baseline justify-between mb-6">
-          <span className="font-mono text-[10px] text-primary/30 tracking-[0.3em]">{card.num}</span>
+          <span className="font-mono text-[10px] text-foreground/15 tracking-[0.3em]">{card.num}</span>
           {card.tag && (
-            <span className="shimmer-tag font-mono text-[9px] uppercase tracking-[0.2em] text-primary/70 border border-primary/20 px-3 py-1 rounded-full">
+            <span className="shimmer-tag font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/40 border border-foreground/10 px-3 py-1 rounded-full">
               {card.tag}
             </span>
           )}
         </div>
 
-        <h3 className="text-2xl font-bold text-foreground tracking-tight mb-4 transition-colors duration-300 group-hover:text-primary">
+        <h3 className="text-2xl font-bold text-foreground tracking-tight mb-4 transition-all duration-500"
+          style={{ textShadow: hovered ? '0 0 20px rgba(255,255,255,0.15)' : 'none' }}
+        >
           {card.title}
         </h3>
 
-        <div className="w-8 h-px bg-border group-hover:bg-primary/40 group-hover:w-12 transition-all duration-500 mb-5" />
+        <div className="w-8 h-px bg-foreground/10 group-hover:bg-foreground/20 group-hover:w-12 transition-all duration-500 mb-5"
+          style={{ boxShadow: hovered ? '0 0 6px rgba(255,255,255,0.08)' : 'none' }}
+        />
 
         <p className="text-[15px] text-muted-foreground leading-relaxed">
           {card.description}
@@ -99,10 +103,10 @@ const SectionHeading = () => {
       transition={{ duration: 0.6, ease: sharp }}
       className="mb-24"
     >
-      <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+      <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
         // Capabilities
       </span>
-      <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+      <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
         {scrambled || "What We Do"}
       </h2>
     </motion.div>
@@ -112,16 +116,6 @@ const SectionHeading = () => {
 const WhatWeDo = () => {
   return (
     <section id="what-we-do" className="py-36 md:py-48 relative">
-      {/* Faint grid background */}
-      <div className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(27 52% 46%) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(27 52% 46%) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      />
       <div className="container mx-auto px-6 relative">
         <SectionHeading />
         <div className="grid md:grid-cols-3 gap-6 md:gap-8">

@@ -11,13 +11,10 @@ const About = () => {
 
   return (
     <section id="about" className="py-36 md:py-48 relative overflow-hidden">
-      {/* Subtle texture background */}
-      <div className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, hsl(27 52% 46%) 0.5px, transparent 0.5px)`,
-          backgroundSize: "24px 24px",
-        }}
-      />
+      {/* Very subtle radial glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,255,255,0.01) 0%, transparent 70%)'
+      }} />
 
       <div className="container mx-auto px-6 relative z-10">
         <div ref={headingRef}>
@@ -28,25 +25,24 @@ const About = () => {
             transition={{ duration: 0.6, ease: sharp }}
             className="mb-20"
           >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 mb-5 block">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-foreground/20 mb-5 block">
               // Who We Are
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-[3.8rem] font-bold tracking-tight text-foreground">
               {heading || "About Binder 33 Labs"}
             </h2>
           </motion.div>
         </div>
 
         <div className="max-w-3xl space-y-10">
-          {/* Pull-quote first paragraph — larger, bolder */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
           >
-            <div className="border-l-2 border-primary/30 pl-8">
-              <p className="text-xl md:text-[1.6rem] text-foreground leading-[1.7] font-medium tracking-[-0.01em]">
+            <div className="border-l border-foreground/15 pl-8" style={{ boxShadow: '-1px 0 8px rgba(255,255,255,0.03)' }}>
+              <p className="text-xl md:text-[1.6rem] text-foreground/70 leading-[1.7] font-medium tracking-[-0.01em]">
                 Binder 33 Labs is based in India. The company was founded by a builder
                 who runs both a technology studio and a textile manufacturing business
                 (Creative Home Decor LLP) in Panipat, Haryana. That dual identity —
