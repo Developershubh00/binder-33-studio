@@ -63,7 +63,7 @@ const Card = ({ card, i }: { card: typeof cards[0]; i: number }) => {
         />
 
         <div className="flex items-baseline justify-between mb-6">
-          <span className="font-mono text-[10px] text-foreground/15 tracking-[0.3em]">{card.num}</span>
+          <span className="font-mono text-[10px] text-foreground/25 tracking-[0.3em]">{card.num}</span>
           {card.tag && (
             <span className="shimmer-tag font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/40 border border-foreground/10 px-3 py-1 rounded-full">
               {card.tag}
