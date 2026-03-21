@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+const sharp = [0.16, 1, 0.3, 1];
+
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
@@ -10,41 +12,49 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32">
+    <section id="contact" className="py-36 md:py-44">
       <div className="container mx-auto px-6">
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-semibold tracking-tight mb-12"
+          transition={{ duration: 0.6, ease: sharp }}
+          className="mb-20"
         >
-          Get in Touch
-        </motion.h2>
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary/60 mb-4 block">
+            Connect
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            Get in Touch
+          </h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 gap-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            transition={{ duration: 0.6, ease: sharp }}
+            className="space-y-8"
           >
             <div>
               <a
                 href="mailto:info@binder33labs.com"
-                className="text-lg text-primary hover:text-foreground transition-colors"
+                className="group text-2xl md:text-3xl font-bold text-foreground hover:text-primary transition-colors duration-300 relative inline-block"
               >
                 info@binder33labs.com
+                <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </a>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="font-mono text-xs tracking-wider text-muted-foreground/60 uppercase">
               Based in Panipat, Haryana, India
             </p>
-            <div className="flex gap-4 pt-2">
+            <div className="flex gap-5 pt-2">
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300"
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -55,7 +65,7 @@ const Contact = () => {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300"
                 aria-label="X / Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -66,42 +76,46 @@ const Contact = () => {
           </motion.div>
 
           <motion.form
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.1, duration: 0.6, ease: sharp }}
             onSubmit={handleSubmit}
-            className="space-y-4"
+            className="space-y-6"
           >
-            <input
-              type="text"
-              placeholder="Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              required
-              className="w-full bg-card border border-border rounded px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-              className="w-full bg-card border border-border rounded px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors"
-            />
-            <textarea
-              placeholder="Message"
-              rows={4}
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              required
-              className="w-full bg-card border border-border rounded px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors resize-none"
-            />
+            {[
+              { type: "text", placeholder: "Name", key: "name" as const },
+              { type: "email", placeholder: "Email", key: "email" as const },
+            ].map((field) => (
+              <div key={field.key} className="relative">
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={form[field.key]}
+                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                  required
+                  className="w-full bg-transparent border-b border-border px-0 py-3 text-[15px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors peer"
+                />
+                <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 peer-focus:scale-x-100 transition-transform duration-500 origin-left" />
+              </div>
+            ))}
+            <div className="relative">
+              <textarea
+                placeholder="Message"
+                rows={3}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                required
+                className="w-full bg-transparent border-b border-border px-0 py-3 text-[15px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none resize-none transition-colors peer"
+              />
+              <span className="absolute bottom-0 left-0 w-full h-px bg-primary scale-x-0 peer-focus:scale-x-100 transition-transform duration-500 origin-left" />
+            </div>
             <button
               type="submit"
-              className="text-sm text-primary border border-primary/30 px-6 py-3 rounded hover:bg-primary/10 transition-colors duration-200"
+              className="group inline-flex items-center gap-3 text-sm font-medium text-primary border border-primary/30 px-7 py-3.5 rounded hover:bg-primary hover:text-primary-foreground transition-all duration-300 mt-4"
             >
               Send Message
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
             </button>
           </motion.form>
         </div>
