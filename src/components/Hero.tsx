@@ -204,7 +204,7 @@ const Hero = () => {
           <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-foreground glow-text">
             <RevealText delay={0.6}>We Build Things</RevealText>
             <br />
-            <span className="text-foreground/60">
+            <span className="text-foreground/80">
               <RevealText delay={0.8}>That Work</RevealText>
             </span>
           </h1>
