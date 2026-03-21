@@ -213,7 +213,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.6 }}
-            className="mt-12 text-foreground/30 max-w-2xl leading-relaxed font-mono text-sm md:text-base"
+            className="mt-12 text-foreground/50 max-w-2xl leading-relaxed font-mono text-sm md:text-base font-medium">
           >
             <ScrambleReveal
               text="Binder 33 Labs is a technology company that builds software products, takes on hard problems, and ships solutions. Based in India. Building for the world."
