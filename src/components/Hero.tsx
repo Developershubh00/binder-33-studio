@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import binderLogo from "@/assets/binder-logo.png";
 
 const sharp = [0.16, 1, 0.3, 1] as const;
 
