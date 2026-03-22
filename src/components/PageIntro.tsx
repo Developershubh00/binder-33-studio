@@ -56,28 +56,16 @@ const PageIntro = ({ onComplete }: { onComplete: () => void }) => {
               }}
             />
 
-            {/* Letter-by-letter wordmark */}
-            <div className="flex items-center justify-center gap-[2px] md:gap-1 overflow-visible">
-              {letters.map((letter, i) => (
-                <motion.span
-                  key={i}
-                  className="font-mono text-[20px] md:text-[28px] tracking-[0.2em] text-foreground/90"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={phase >= 1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: i * 0.035,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  style={{
-                    textShadow: '0 0 20px rgba(255,255,255,0.25)',
-                    minWidth: letter === ' ' ? '0.5em' : undefined,
-                  }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </div>
+            {/* Wordmark — plain fade in */}
+            <motion.p
+              className="font-mono text-[20px] md:text-[28px] tracking-[0.2em] text-foreground/90"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase >= 1 ? 1 : 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ textShadow: '0 0 20px rgba(255,255,255,0.25)' }}
+            >
+              BINDER 33 LABS
+            </motion.p>
           </motion.div>
         </>
       )}
