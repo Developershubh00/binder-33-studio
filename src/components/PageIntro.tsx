@@ -16,7 +16,7 @@ const PageIntro = ({ onComplete }: { onComplete: () => void }) => {
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [onComplete]);
 
-  const letters = "BINDER 33 LABS".split("");
+  
 
   return (
     <AnimatePresence>
