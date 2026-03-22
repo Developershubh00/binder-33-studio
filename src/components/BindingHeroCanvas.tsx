@@ -253,9 +253,7 @@ const BindingHeroCanvas = () => {
         ctx.fillStyle = "rgba(255,255,255,0.95)";
         ctx.fill();
 
-        // Label
-        ctx.fillStyle = "rgba(255,255,255,0.9)";
-        ctx.fillText(n.label, n.x, n.y - 7);
+        // Labels removed
       }
 
       // Draw particles
