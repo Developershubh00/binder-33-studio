@@ -57,35 +57,26 @@ const Products = () => {
           style={{ rotateX, rotateY, transformPerspective: 1200 }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative border border-foreground/8 rounded-sm p-8 md:p-16 overflow-hidden max-w-5xl mx-auto"
+          className="relative border border-foreground/8 rounded-sm overflow-hidden max-w-5xl mx-auto"
           id="product-card"
         >
-          {/* Depth glow background */}
-          <div className="absolute inset-0 pointer-events-none" style={{
-            background: 'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(255,255,255,0.02) 0%, transparent 60%)'
-          }} />
-
-          {/* Top and bottom glow lines */}
-          <div className="absolute top-0 left-0 w-full h-px" style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)',
-            boxShadow: '0 0 10px rgba(255,255,255,0.03)',
-          }} />
-          <div className="absolute bottom-0 left-0 w-full h-px" style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)',
-          }} />
-
-          {/* Corner marks */}
-          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-foreground/10" />
-          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-foreground/10" />
-          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10" />
-          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10" />
-
-          {/* Prime Radiant Canvas - Centered */}
-          <div className="relative w-full h-[350px] md:h-[450px] flex items-center justify-center mb-12">
+          {/* Prime Radiant as full background */}
+          <div className="absolute inset-0 z-0">
             <BindingHeroCanvas />
           </div>
 
-          <div className="relative z-10 text-center max-w-2xl mx-auto">
+          {/* Overlay gradient for text readability */}
+          <div className="absolute inset-0 z-[1] pointer-events-none" style={{
+            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)'
+          }} />
+
+          {/* Corner marks */}
+          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-foreground/10 z-[2]" />
+          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-foreground/10 z-[2]" />
+          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10 z-[2]" />
+          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10 z-[2]" />
+
+          <div className="relative z-[3] text-center max-w-2xl mx-auto py-20 md:py-32 px-8 md:px-16">
               <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
                 Flagship Product
               </span>
@@ -118,11 +109,10 @@ const Products = () => {
                 <span>Explore Binder OS</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
               </a>
+              <p className="mt-16 font-mono text-[10px] text-foreground/15 tracking-[0.2em] uppercase">
+                More products in development.
+              </p>
           </div>
-
-          <p className="mt-16 font-mono text-[10px] text-foreground/15 tracking-[0.2em] uppercase">
-            More products in development.
-          </p>
         </motion.div>
       </div>
     </section>
