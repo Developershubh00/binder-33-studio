@@ -218,12 +218,12 @@ const BindingHeroCanvas = () => {
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < connDist) {
             const localShimmer = Math.sin(now * 0.0008 + (i + j) * 0.05) * 0.15;
-            const alpha = (1 - d / connDist) * 0.35 * (globalPulse + localShimmer);
+            const alpha = (1 - d / connDist) * 0.55 * (globalPulse + localShimmer);
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.strokeStyle = `rgba(212,170,90,${alpha})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
