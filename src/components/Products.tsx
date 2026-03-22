@@ -1,112 +1,10 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { useTextScramble } from "@/hooks/useTextScramble";
+import BindingHeroCanvas from "@/components/BindingHeroCanvas";
 
 const sharp = [0.16, 1, 0.3, 1];
 
-// Network visualization with white glowing nodes
-const NetworkVis = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const dpr = window.devicePixelRatio || 1;
-    const w = 400, h = 300;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = `${w}px`;
-    canvas.style.height = `${h}px`;
-    ctx.scale(dpr, dpr);
-
-    const nodes = Array.from({ length: 24 }, (_, i) => ({
-      x: Math.random() * (w - 40) + 20,
-      y: Math.random() * (h - 40) + 20,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: 1.5 + Math.random() * 2.5,
-      phase: Math.random() * Math.PI * 2,
-      type: i < 4 ? "hub" : "node",
-    }));
-
-    let animId: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-
-      nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        n.phase += 0.008;
-        if (n.x < 15 || n.x > w - 15) n.vx *= -1;
-        if (n.y < 15 || n.y > h - 15) n.vy *= -1;
-      });
-
-      // Draw connections — white
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-          if (d < 120) {
-            const alpha = (1 - d / 120) * 0.1;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = nodes[i].type === "hub" || nodes[j].type === "hub" ? 1 : 0.5;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw nodes — white with glow
-      nodes.forEach(n => {
-        const glow = 0.3 + Math.sin(n.phase) * 0.2;
-        const r = n.type === "hub" ? n.r * 1.5 : n.r;
-
-        if (n.type === "hub") {
-          ctx.fillStyle = `rgba(255, 255, 255, ${glow * 0.08})`;
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, r * 5, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.fillStyle = `rgba(255, 255, 255, ${glow + 0.2})`;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Data pulse
-      const time = Date.now() * 0.001;
-      const pulseIdx = Math.floor(time * 0.5) % nodes.length;
-      const pulseNode = nodes[pulseIdx];
-      const t = (time * 0.5) % 1;
-      nodes.forEach(n => {
-        if (n === pulseNode) return;
-        const d = Math.hypot(n.x - pulseNode.x, n.y - pulseNode.y);
-        if (d < 120) {
-          const px = pulseNode.x + (n.x - pulseNode.x) * t;
-          const py = pulseNode.y + (n.y - pulseNode.y) * t;
-          ctx.fillStyle = `rgba(255, 255, 255, ${0.5 * (1 - t)})`;
-          ctx.beginPath();
-          ctx.arc(px, py, 2, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
-
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  return <canvas ref={canvasRef} className="w-[400px] h-[300px] opacity-70" />;
-};
 
 const Products = () => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -218,8 +116,8 @@ const Products = () => {
               </a>
             </div>
 
-            <div className="hidden md:flex items-center justify-center shrink-0">
-              <NetworkVis />
+            <div className="hidden md:block relative shrink-0 w-[450px] h-[350px]">
+              <BindingHeroCanvas />
             </div>
           </div>
 
