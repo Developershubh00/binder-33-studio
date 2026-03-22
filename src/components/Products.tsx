@@ -80,8 +80,12 @@ const Products = () => {
           <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10" />
           <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10" />
 
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 relative z-10">
-            <div className="flex-1">
+          {/* Prime Radiant Canvas - Centered */}
+          <div className="relative w-full h-[350px] md:h-[450px] flex items-center justify-center mb-12">
+            <BindingHeroCanvas />
+          </div>
+
+          <div className="relative z-10 text-center max-w-2xl mx-auto">
               <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
                 Flagship Product
               </span>
@@ -93,7 +97,7 @@ const Products = () => {
               <p className="text-foreground/60 text-sm mb-8 font-medium tracking-wide">
                 A factory's nervous system — the Textile Manufacturing Operating System.
               </p>
-              <p className="text-foreground/50 text-[15px] leading-[1.8] max-w-xl mb-5">
+              <p className="text-foreground/50 text-[15px] leading-[1.8] mx-auto mb-5">
                 Binder OS is a complete operating system for India's textile SMEs,
                 exporters, and job workers. It replaces fragmented spreadsheets and
                 WhatsApp coordination with a single system of record — covering
@@ -114,11 +118,6 @@ const Products = () => {
                 <span>Explore Binder OS</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
               </a>
-            </div>
-
-            <div className="hidden md:block relative shrink-0 w-[450px] h-[350px]">
-              <BindingHeroCanvas />
-            </div>
           </div>
 
           <p className="mt-16 font-mono text-[10px] text-foreground/15 tracking-[0.2em] uppercase">
