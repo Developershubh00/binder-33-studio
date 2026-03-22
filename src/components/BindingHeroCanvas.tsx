@@ -1,34 +1,25 @@
 import { useRef, useEffect } from "react";
 
 const NODE_LABELS = [
-  "Buyer Inquiry","Internal Purchase Order (IPO)","Sampling","Vendor Purchase Order (VPO)",
-  "Vendor Management","Receivable Challan (Gate Entry)","UIN Creation","USN Creation",
-  "Inward Register","UQR — Incoming","Incoming Quality Parameters","UQR Decision",
-  "Stock Dashboard","Stock Transfers (Internal)","IPC Allocation","Outward Register",
-  "Production Order / IPC Creation","Process Sequence Management","Handloom",
-  "Frame Loom (Semi-Manual)","Power Loom (Shuttle)","Rapier Loom","Air-Jet Loom",
-  "Water-Jet Loom","Jacquard Loom","Dobby Loom","Weaving Quality Checkpoints",
-  "Circular Knitting","Flat Knitting","Warp Knitting (Tricot / Raschel)",
-  "Knitting Quality Checkpoints","Pre-Treatment","Fabric Dyeing — Batch",
-  "Fabric Dyeing — Continuous","Yarn Dyeing","Garment Dyeing","Specialty Dyeing",
-  "Dyeing Quality Checkpoints","Screen Printing (Flat Bed)","Rotary Screen Printing",
-  "Digital Printing","Sublimation Printing (Transfer)","Block Printing (Traditional)",
-  "Specialty Printing","Printing Quality Checkpoints","Cut Pile Tufting",
-  "Loop Pile Tufting","Cut & Loop Combination","Hand Tufting (Gun Tufting)",
-  "Graphics Tufting (CNC)","Tufting Quality Checkpoints","Multi-Head Embroidery Machine",
-  "Schiffli Embroidery","Aari / Chain Stitch Embroidery",
-  "Computerized Single-Head Embroidery","Embroidery Quality Checkpoints",
-  "Mechanical Finishing","Heat Setting / Stentering","Chemical Finishing",
-  "Coating & Lamination","Finishing Quality Checkpoints","Manual Cutting",
-  "Automated / CAM Cutting","Specialty Cutting","Cutting Quality Checkpoints",
-  "Stitch Types & Machines","Sewing Line Flow","Sewing Quality Checkpoints",
-  "Multi-Needle Quilting","Single Needle / Longarm Quilting","Ultrasonic Quilting",
-  "Quilting Quality Checkpoints","In-Line Inspection","End-Line Inspection",
-  "Final Random Inspection (AQL-Based)","Lab Testing",
-  "Individual Product Packaging","Inner Carton Packing","Master Carton Packing",
-  "Palletization","Packaging Quality Checkpoints","Delivery Challan Generation",
-  "Types of Challans","Export Documentation","Domestic Dispatch",
-  "Dispatch Quality Checkpoints"
+  "Inquiry & Order Management",
+  "Procurement",
+  "Goods Receipt & Inward",
+  "Quality Control — Incoming Inspection",
+  "Stock Management",
+  "Production Planning & Orders",
+  "Weaving",
+  "Knitting",
+  "Dyeing",
+  "Printing",
+  "Tufting",
+  "Embroidery",
+  "Finishing",
+  "Cutting",
+  "Sewing / Stitching",
+  "Quilting",
+  "Quality Control — Final Inspection",
+  "Packaging",
+  "Dispatch & Logistics",
 ];
 
 interface Vec3 { x: number; y: number; z: number }
@@ -109,9 +100,9 @@ const BindingHeroCanvas = () => {
     if (!ctx) return;
 
     const isMobile = window.innerWidth < 768;
-    const nodeCount = isMobile ? 50 : 86;
-    const particleCount = isMobile ? 35 : 65;
-    const connDist = isMobile ? 260 : 350;
+    const nodeCount = 19;
+    const particleCount = isMobile ? 25 : 45;
+    const connDist = isMobile ? 300 : 450;
 
     let w = 0, h = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
