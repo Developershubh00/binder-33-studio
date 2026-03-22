@@ -116,8 +116,8 @@ const Products = () => {
               </a>
             </div>
 
-            <div className="hidden md:flex items-center justify-center shrink-0">
-              <NetworkVis />
+            <div className="hidden md:block relative shrink-0 w-[450px] h-[350px]">
+              <BindingHeroCanvas />
             </div>
           </div>
 
