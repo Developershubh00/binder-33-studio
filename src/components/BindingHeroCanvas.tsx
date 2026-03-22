@@ -100,9 +100,9 @@ const BindingHeroCanvas = () => {
     if (!ctx) return;
 
     const isMobile = window.innerWidth < 768;
-    const nodeCount = isMobile ? 50 : 86;
-    const particleCount = isMobile ? 35 : 65;
-    const connDist = isMobile ? 260 : 350;
+    const nodeCount = 19;
+    const particleCount = isMobile ? 25 : 45;
+    const connDist = isMobile ? 300 : 450;
 
     let w = 0, h = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
