@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { useTextScramble } from "@/hooks/useTextScramble";
+import BindingHeroCanvas from "@/components/BindingHeroCanvas";
 
 const sharp = [0.16, 1, 0.3, 1];
 
