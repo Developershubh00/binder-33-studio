@@ -114,7 +114,7 @@ const Contact = () => {
               </div>
             ))}
             <div className="relative group">
-              <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/15 mb-2 block">
+              <label className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/50 mb-2 block">
                 Message
               </label>
               <textarea
