@@ -240,19 +240,6 @@ const Hero = () => {
           </motion.a>
         </div>
 
-        {/* Coordinate overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 1 }}
-          className="absolute bottom-12 right-6 hidden lg:block"
-        >
-          <div className="font-mono text-[10px] text-foreground/10 space-y-1 text-right">
-            <div>29.3919° N</div>
-            <div>76.9681° E</div>
-            <div className="text-foreground/20">PANIPAT, IN</div>
-          </div>
-        </motion.div>
       </motion.div>
 
       {/* Bottom gradient — seamless transition (same bg color) */}
