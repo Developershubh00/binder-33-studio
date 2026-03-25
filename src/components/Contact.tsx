@@ -106,7 +106,7 @@ const Contact = () => {
                   value={form[field.key]}
                   onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                   required
-                  className="w-full bg-transparent border-b border-foreground/10 px-0 py-3 text-[15px] text-foreground placeholder:text-foreground/15 focus:outline-none transition-all duration-500 peer"
+                  className="w-full bg-transparent border-b border-foreground/20 px-0 py-3 text-[15px] text-foreground placeholder:text-foreground/40 focus:outline-none transition-all duration-500 peer"
                 />
                 <span className="absolute bottom-0 left-0 w-full h-px bg-foreground/40 scale-x-0 peer-focus:scale-x-100 transition-transform duration-700 origin-left"
                   style={{ boxShadow: '0 0 6px rgba(255,255,255,0.08)' }}
