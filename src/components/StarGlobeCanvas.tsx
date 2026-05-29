@@ -156,7 +156,7 @@ const StarGlobeCanvas = () => {
         z1 = z2;
         const xr = x1 * cosZ - y1 * sinZ;
         const yr = x1 * sinZ + y1 * cosZ;
-        return { x: cx + xr * radius, y: cy + yr * radius, z: z1 };
+        return { x: cx + xr * radius, y: cy - yr * radius, z: z1 };
       };
 
       ctx.lineWidth = 0.5;
