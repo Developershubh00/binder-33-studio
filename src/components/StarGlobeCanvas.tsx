@@ -25,7 +25,6 @@ const DOTS: DotVec[] = (() => {
 
 const StarGlobeCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const tiltRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -60,26 +59,12 @@ const StarGlobeCanvas = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const onMouse = (e: MouseEvent) => {
-      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-      tiltRef.current = { x: nx, y: ny };
-    };
-    window.addEventListener("mousemove", onMouse);
-
-    const TILT = -0.42; // fixed axial tilt
+    const INDIA_CENTER_ROTATION = ((78 - 90) * Math.PI) / 180;
     let animId: number;
 
     const render = (rotY: number) => {
       ctx.clearRect(0, 0, w, h);
 
-      const targetTiltX = TILT + tiltRef.current.y * 0.12;
-      const targetTiltZ = tiltRef.current.x * 0.08;
-
-      const cosT = Math.cos(targetTiltX);
-      const sinT = Math.sin(targetTiltX);
-      const cosZ = Math.cos(targetTiltZ);
-      const sinZ = Math.sin(targetTiltZ);
       const cosY = Math.cos(rotY);
       const sinY = Math.sin(rotY);
 
@@ -93,24 +78,14 @@ const StarGlobeCanvas = () => {
       ctx.fill();
 
       // Latitude / longitude grid
-      drawGrid(cosY, sinY, cosT, sinT, cosZ, sinZ);
+      drawGrid(cosY, sinY);
 
       // Land dots
       for (const d of DOTS) {
         // rotate around Y
-        let x = d.x * cosY + d.z * sinY;
-        let z = -d.x * sinY + d.z * cosY;
-        let y = d.y;
-        // tilt around X
-        let y2 = y * cosT - z * sinT;
-        let z2 = y * sinT + z * cosT;
-        y = y2;
-        z = z2;
-        // slight roll around Z
-        const x3 = x * cosZ - y * sinZ;
-        const y3 = x * sinZ + y * cosZ;
-        x = x3;
-        y = y3;
+        const x = d.x * cosY + d.z * sinY;
+        const z = -d.x * sinY + d.z * cosY;
+        const y = d.y;
 
         if (z < -0.02) continue; // cull far hemisphere
 
@@ -134,29 +109,15 @@ const StarGlobeCanvas = () => {
       }
     };
 
-    const drawGrid = (
-      cosY: number,
-      sinY: number,
-      cosT: number,
-      sinT: number,
-      cosZ: number,
-      sinZ: number,
-    ) => {
+    const drawGrid = (cosY: number, sinY: number) => {
       const project = (lat: number, lon: number) => {
         const cl = Math.cos(lat);
         let x = cl * Math.cos(lon);
         const y0 = Math.sin(lat);
         let z = cl * Math.sin(lon);
-        let x1 = x * cosY + z * sinY;
-        let z1 = -x * sinY + z * cosY;
-        let y1 = y0;
-        const y2 = y1 * cosT - z1 * sinT;
-        const z2 = y1 * sinT + z1 * cosT;
-        y1 = y2;
-        z1 = z2;
-        const xr = x1 * cosZ - y1 * sinZ;
-        const yr = x1 * sinZ + y1 * cosZ;
-        return { x: cx + xr * radius, y: cy - yr * radius, z: z1 };
+        const x1 = x * cosY + z * sinY;
+        const z1 = -x * sinY + z * cosY;
+        return { x: cx + x1 * radius, y: cy - y0 * radius, z: z1 };
       };
 
       ctx.lineWidth = 0.5;
@@ -206,16 +167,15 @@ const StarGlobeCanvas = () => {
     };
 
     if (reduceMotion) {
-      render(0.6);
+      render(INDIA_CENTER_ROTATION);
       return () => {
         window.removeEventListener("resize", resize);
-        window.removeEventListener("mousemove", onMouse);
       };
     }
 
     let start = performance.now();
     const loop = (now: number) => {
-      const rotY = ((now - start) / 1000) * 0.18;
+      const rotY = INDIA_CENTER_ROTATION + ((now - start) / 1000) * 0.18;
       render(rotY);
       animId = requestAnimationFrame(loop);
     };
@@ -224,7 +184,6 @@ const StarGlobeCanvas = () => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouse);
     };
   }, []);
 
