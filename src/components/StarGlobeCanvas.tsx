@@ -116,7 +116,7 @@ const StarGlobeCanvas = () => {
 
         const depth = (z + 1) / 2; // 0..1
         const sx = cx + x * radius;
-        const sy = cy + y * radius;
+        const sy = cy - y * radius;
         const size = 0.5 + depth * 1.4;
         const alpha = 0.12 + depth * 0.78;
 
