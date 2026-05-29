@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import StarGlobeCanvas from "./StarGlobeCanvas";
 
 
 const sharp = [0.16, 1, 0.3, 1] as const;
@@ -189,6 +190,11 @@ const Hero = () => {
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ParticleField />
+
+      {/* Star globe — right side, bleeds off the edge */}
+      <div className="absolute inset-y-0 right-0 w-full md:w-[70%] lg:w-[60%] pointer-events-none hidden sm:block">
+        <StarGlobeCanvas />
+      </div>
 
       {/* Radial depth glow — center of screen */}
       <div className="absolute inset-0 pointer-events-none" style={{
