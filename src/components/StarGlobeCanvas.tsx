@@ -52,10 +52,11 @@ const StarGlobeCanvas = () => {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Large globe confined to the right side, bleeding off the right edge.
-      radius = h * 0.9;
-      cx = w * 0.78;
-      cy = h * 0.52;
+      // Large globe kept on the RIGHT side, bleeding off the right edge.
+      // cx near the right edge keeps the visible portion out of the center.
+      radius = h * 0.72;
+      cx = w * 0.95;
+      cy = h * 0.46;
     };
     resize();
     window.addEventListener("resize", resize);
