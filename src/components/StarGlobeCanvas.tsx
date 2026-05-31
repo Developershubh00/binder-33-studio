@@ -52,9 +52,11 @@ const StarGlobeCanvas = () => {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      radius = Math.min(h * 0.62, w * 0.55);
-      cx = w * 0.92;
-      cy = h * 0.5;
+      // Large globe whose center sits near/past the right edge so only the
+      // left portion is visible — matching the reference image ratio.
+      radius = h * 0.92;
+      cx = w * 0.98;
+      cy = h * 0.52;
     };
     resize();
     window.addEventListener("resize", resize);
