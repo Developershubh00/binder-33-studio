@@ -191,7 +191,7 @@ const Hero = () => {
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ParticleField />
 
-      {/* Star globe — large, bleeds off the right edge */}
+      {/* Star globe — confined to the right side, bleeds off the right edge */}
       <div className="absolute inset-0 pointer-events-none hidden sm:block">
         <StarGlobeCanvas />
       </div>

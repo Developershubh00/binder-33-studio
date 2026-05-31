@@ -52,11 +52,11 @@ const StarGlobeCanvas = () => {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Large globe whose center sits near the right edge so only the left
-      // portion of the front face is visible — matching the reference ratio.
-      radius = h * 0.86;
-      cx = w * 0.82;
-      cy = h * 0.5;
+      // Large globe kept on the RIGHT side, bleeding off the right edge.
+      // cx near the right edge keeps the visible portion out of the center.
+      radius = h * 0.72;
+      cx = w * 0.95;
+      cy = h * 0.46;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -64,6 +64,10 @@ const StarGlobeCanvas = () => {
     // Rotate so the visible left portion of the front face shows the
     // Africa / Middle-East / India landmasses (not empty Pacific ocean).
     const INDIA_CENTER_ROTATION = (-60 * Math.PI) / 180;
+    // Pitch the globe forward so we look down onto the northern hemisphere.
+    const TILT = (32 * Math.PI) / 180;
+    const cosT = Math.cos(TILT);
+    const sinT = Math.sin(TILT);
     let animId: number;
 
     const render = (rotY: number) => {
@@ -88,8 +92,11 @@ const StarGlobeCanvas = () => {
       for (const d of DOTS) {
         // rotate around Y
         const x = d.x * cosY + d.z * sinY;
-        const z = -d.x * sinY + d.z * cosY;
-        const y = d.y;
+        const zr = -d.x * sinY + d.z * cosY;
+        const yr = d.y;
+        // pitch around X (look from above)
+        const y = yr * cosT - zr * sinT;
+        const z = yr * sinT + zr * cosT;
 
         if (z < -0.02) continue; // cull far hemisphere
 
@@ -116,12 +123,14 @@ const StarGlobeCanvas = () => {
     const drawGrid = (cosY: number, sinY: number) => {
       const project = (lat: number, lon: number) => {
         const cl = Math.cos(lat);
-        let x = cl * Math.cos(lon);
+        const x0 = cl * Math.cos(lon);
         const y0 = Math.sin(lat);
-        let z = cl * Math.sin(lon);
-        const x1 = x * cosY + z * sinY;
-        const z1 = -x * sinY + z * cosY;
-        return { x: cx + x1 * radius, y: cy - y0 * radius, z: z1 };
+        const z0 = cl * Math.sin(lon);
+        const x1 = x0 * cosY + z0 * sinY;
+        const z1 = -x0 * sinY + z0 * cosY;
+        const y2 = y0 * cosT - z1 * sinT;
+        const z2 = y0 * sinT + z1 * cosT;
+        return { x: cx + x1 * radius, y: cy - y2 * radius, z: z2 };
       };
 
       ctx.lineWidth = 0.5;
