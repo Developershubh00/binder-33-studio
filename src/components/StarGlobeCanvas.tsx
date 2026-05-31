@@ -52,16 +52,18 @@ const StarGlobeCanvas = () => {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Large globe whose center sits near/past the right edge so only the
-      // left portion is visible — matching the reference image ratio.
-      radius = h * 0.92;
-      cx = w * 0.98;
-      cy = h * 0.52;
+      // Large globe whose center sits near the right edge so only the left
+      // portion of the front face is visible — matching the reference ratio.
+      radius = h * 0.86;
+      cx = w * 0.82;
+      cy = h * 0.5;
     };
     resize();
     window.addEventListener("resize", resize);
 
-    const INDIA_CENTER_ROTATION = ((78 - 90) * Math.PI) / 180;
+    // Rotate so the visible left portion of the front face shows the
+    // Africa / Middle-East / India landmasses (not empty Pacific ocean).
+    const INDIA_CENTER_ROTATION = (-60 * Math.PI) / 180;
     let animId: number;
 
     const render = (rotY: number) => {
