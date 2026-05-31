@@ -192,7 +192,7 @@ const Hero = () => {
       <ParticleField />
 
       {/* Star globe — confined to the right side, bleeds off the right edge */}
-      <div className="absolute inset-y-0 right-0 w-[55%] lg:w-[50%] pointer-events-none hidden sm:block">
+      <div className="absolute inset-0 pointer-events-none hidden sm:block">
         <StarGlobeCanvas />
       </div>
 
