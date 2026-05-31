@@ -85,9 +85,6 @@ const StarGlobeCanvas = () => {
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Latitude / longitude grid
-      drawGrid(cosY, sinY);
-
       // Land dots
       for (const d of DOTS) {
         // rotate around Y
@@ -117,65 +114,6 @@ const StarGlobeCanvas = () => {
           ctx.fillStyle = `rgba(255,255,255,${(depth - 0.82) * 0.25})`;
           ctx.fill();
         }
-      }
-    };
-
-    const drawGrid = (cosY: number, sinY: number) => {
-      const project = (lat: number, lon: number) => {
-        const cl = Math.cos(lat);
-        const x0 = cl * Math.cos(lon);
-        const y0 = Math.sin(lat);
-        const z0 = cl * Math.sin(lon);
-        const x1 = x0 * cosY + z0 * sinY;
-        const z1 = -x0 * sinY + z0 * cosY;
-        const y2 = y0 * cosT - z1 * sinT;
-        const z2 = y0 * sinT + z1 * cosT;
-        return { x: cx + x1 * radius, y: cy - y2 * radius, z: z2 };
-      };
-
-      ctx.lineWidth = 0.5;
-      ctx.strokeStyle = "rgba(255,255,255,0.06)";
-
-      // Latitude lines
-      for (let latDeg = -60; latDeg <= 60; latDeg += 30) {
-        const lat = (latDeg * Math.PI) / 180;
-        ctx.beginPath();
-        let started = false;
-        for (let lonDeg = 0; lonDeg <= 360; lonDeg += 4) {
-          const p = project(lat, (lonDeg * Math.PI) / 180);
-          if (p.z < -0.05) {
-            started = false;
-            continue;
-          }
-          if (!started) {
-            ctx.moveTo(p.x, p.y);
-            started = true;
-          } else {
-            ctx.lineTo(p.x, p.y);
-          }
-        }
-        ctx.stroke();
-      }
-
-      // Longitude lines
-      for (let lonDeg = 0; lonDeg < 360; lonDeg += 30) {
-        const lon = (lonDeg * Math.PI) / 180;
-        ctx.beginPath();
-        let started = false;
-        for (let latDeg = -90; latDeg <= 90; latDeg += 4) {
-          const p = project((latDeg * Math.PI) / 180, lon);
-          if (p.z < -0.05) {
-            started = false;
-            continue;
-          }
-          if (!started) {
-            ctx.moveTo(p.x, p.y);
-            started = true;
-          } else {
-            ctx.lineTo(p.x, p.y);
-          }
-        }
-        ctx.stroke();
       }
     };
 

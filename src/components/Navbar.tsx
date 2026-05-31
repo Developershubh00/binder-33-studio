@@ -63,9 +63,10 @@ const Navbar = () => {
               href={item.href}
               className={`relative text-xs font-mono tracking-wider uppercase transition-colors duration-500 ${
                 activeSection === item.href
-                  ? "text-foreground/90"
-                  : "text-foreground/40 hover:text-foreground/70"
+                  ? "text-foreground"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
+              style={{ textShadow: "0 0 8px hsl(var(--background)), 0 0 16px hsl(var(--background))" }}
             >
               {item.label}
               {activeSection === item.href && (
