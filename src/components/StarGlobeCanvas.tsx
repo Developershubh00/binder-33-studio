@@ -85,9 +85,6 @@ const StarGlobeCanvas = () => {
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Latitude / longitude grid
-      drawGrid(cosY, sinY);
-
       // Land dots
       for (const d of DOTS) {
         // rotate around Y
