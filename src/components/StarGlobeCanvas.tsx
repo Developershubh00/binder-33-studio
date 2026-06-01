@@ -11,7 +11,12 @@ interface DotVec {
 const DOTS: DotVec[] = (() => {
   const out: DotVec[] = [];
   for (let i = 0; i < LAND_POINTS.length; i += 2) {
-    const lat = (LAND_POINTS[i] * Math.PI) / 180;
+    const latDeg = LAND_POINTS[i];
+    // Drop the Antarctic/south-pole rows: from this overhead northern view they
+    // project into a rigid horizontal dotted band instead of readable landmass.
+    if (latDeg < -58) continue;
+
+    const lat = (latDeg * Math.PI) / 180;
     const lon = (LAND_POINTS[i + 1] * Math.PI) / 180;
     const cl = Math.cos(lat);
     out.push({
