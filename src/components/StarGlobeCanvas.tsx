@@ -95,7 +95,7 @@ const StarGlobeCanvas = () => {
         const y = yr * cosT - zr * sinT;
         const z = yr * sinT + zr * cosT;
 
-        if (z < -0.02) continue; // cull far hemisphere
+        if (z < 0.2) continue; // cull far hemisphere + limb edge (removes dense vertical rim line)
 
         const depth = (z + 1) / 2; // 0..1
         const sx = cx + x * radius;
