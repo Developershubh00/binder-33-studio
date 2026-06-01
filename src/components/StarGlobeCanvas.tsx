@@ -11,7 +11,12 @@ interface DotVec {
 const DOTS: DotVec[] = (() => {
   const out: DotVec[] = [];
   for (let i = 0; i < LAND_POINTS.length; i += 2) {
-    const lat = (LAND_POINTS[i] * Math.PI) / 180;
+    const latDeg = LAND_POINTS[i];
+    // Drop the Antarctic/south-pole rows: from this overhead northern view they
+    // project into a rigid horizontal dotted band instead of readable landmass.
+    if (latDeg < -58) continue;
+
+    const lat = (latDeg * Math.PI) / 180;
     const lon = (LAND_POINTS[i + 1] * Math.PI) / 180;
     const cl = Math.cos(lat);
     out.push({
@@ -95,7 +100,7 @@ const StarGlobeCanvas = () => {
         const y = yr * cosT - zr * sinT;
         const z = yr * sinT + zr * cosT;
 
-        if (z < 0.2) continue; // cull far hemisphere + limb edge (removes dense vertical rim line)
+        if (z < 0.42 || y < -0.02) continue; // cull far hemisphere + lower limb so no straight horizon band appears
 
         const depth = (z + 1) / 2; // 0..1
         const sx = cx + x * radius;
