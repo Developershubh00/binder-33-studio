@@ -1,108 +1,98 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
-const CX = 540;
-const CY = 540;
-const STROKE = "#c26a38";
-const BG = "#ece3d6";
+// Exact reconstruction (traced from the source logo, coords in the 378x386 space).
+const CX = 209.5;
+const CY = 194.5;
+const STROKE = "#d7894f";
+const BG = "#f1ebe3";
 const TAU = Math.PI * 2;
 
-// pointy-top hexagon vertices
+// regular pointy-top hexagon vertices (r = center-to-vertex distance)
 function hex(r: number): [number, number][] {
-  const pts: [number, number][] = [];
+  const v: [number, number][] = [];
   for (let i = 0; i < 6; i++) {
-    const a = (-90 + i * 60) * (Math.PI / 180);
-    pts.push([CX + r * Math.cos(a), CY + r * Math.sin(a)]);
+    const a = ((-90 + i * 60) * Math.PI) / 180;
+    v.push([CX + r * Math.cos(a), CY + r * Math.sin(a)]);
   }
-  return pts;
+  return v;
 }
 
-function ptsStr(p: [number, number][]) {
-  return p.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
+// complete graph K6 (6 edges + 9 diagonals = exactly the lines in the source)
+function k6(v: [number, number][]) {
+  const l: [number, number, number, number][] = [];
+  for (let i = 0; i < 6; i++)
+    for (let j = i + 1; j < 6; j++) l.push([v[i][0], v[i][1], v[j][0], v[j][1]]);
+  return l;
 }
 
-// complete graph lines of a hexagon (edges + diagonals)
-function completeLines(p: [number, number][]) {
-  const lines: [number, number, number, number][] = [];
-  for (let i = 0; i < p.length; i++)
-    for (let j = i + 1; j < p.length; j++)
-      lines.push([p[i][0], p[i][1], p[j][0], p[j][1]]);
-  return lines;
-}
+const pts = (v: [number, number][]) => v.map((p) => p.join(",")).join(" ");
 
-function square(r: number, rot: number): [number, number][] {
-  const pts: [number, number][] = [];
-  for (let i = 0; i < 4; i++) {
-    const a = (rot + i * 90) * (Math.PI / 180);
-    pts.push([CX + r * Math.cos(a), CY + r * Math.sin(a)]);
-  }
-  return pts;
-}
+// The three nested hexagons (measured radii) + the central diamond.
+const HEX_R = [184.5, 124.5, 75];
+const DIA = 54.5; // central rotated-square half-diagonal
 
-interface LayerCfg {
-  scale: number;
-  rotAmp: number; // deg
-  scaleAmp: number;
-  phase: number;
+const SW = 0.85;
+
+interface Motion {
+  rotAmp: number; // degrees
   dir: number;
-  opacity: number;
-  fill?: string;
-  width: number;
+  scaleAmp: number;
+  phase: number; // just shifts the peak timing; endpoints stay static
 }
 
-const HEX_R = 470;
+// Each shape gets its own rotation direction / amplitude. All motion is
+// A*sin(TAU*t) so frame 0 and the last frame are the exact static original.
+const HEX_MOTION: Motion[] = [
+  { rotAmp: 8, dir: 1, scaleAmp: 0.02, phase: 0 },
+  { rotAmp: 14, dir: -1, scaleAmp: 0.05, phase: 0 },
+  { rotAmp: 22, dir: 1, scaleAmp: 0.08, phase: 0 },
+];
+const DIA_MOTION: Motion = { rotAmp: 38, dir: -1, scaleAmp: 0.12, phase: 0 };
+
+function xf(m: Motion, s: number, scaleBase = 1) {
+  const rot = m.dir * m.rotAmp * s;
+  const sc = scaleBase * (1 + m.scaleAmp * s);
+  return `rotate(${rot} ${CX} ${CY}) translate(${CX} ${CY}) scale(${sc}) translate(${-CX} ${-CY})`;
+}
 
 export const LogoVideo = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
-  // t goes 0..1 across the loop; sin(TAU*t) starts & ends at 0 => static -> motion -> static
   const t = frame / durationInFrames;
-  const ease = Math.sin(TAU * t); // -1..1, 0 at start & end
+  const s = Math.sin(TAU * t); // 0 at start & end -> static -> motion -> static loop
 
-  const hexLayers: LayerCfg[] = [
-    { scale: 1.0, rotAmp: 10, scaleAmp: 0.03, phase: 0.0, dir: 1, opacity: 0.6, width: 1.4 },
-    { scale: 0.66, rotAmp: 16, scaleAmp: 0.05, phase: 0.3, dir: -1, opacity: 0.7, width: 1.3 },
-    { scale: 0.4, rotAmp: 22, scaleAmp: 0.06, phase: 0.6, dir: 1, opacity: 0.85, width: 1.2 },
+  const hexV = HEX_R.map((r) => hex(r));
+  const dia: [number, number][] = [
+    [CX, CY - DIA],
+    [CX + DIA, CY],
+    [CX, CY + DIA],
+    [CX - DIA, CY],
   ];
-
-  const squareLayers: LayerCfg[] = [
-    { scale: 0.9, rotAmp: 14, scaleAmp: 0.04, phase: 0.15, dir: -1, opacity: 0.55, width: 1.3 },
-    { scale: 0.62, rotAmp: 20, scaleAmp: 0.05, phase: 0.45, dir: 1, opacity: 0.7, width: 1.2, fill: "rgba(196,120,70,0.10)" },
-    { scale: 0.34, rotAmp: 28, scaleAmp: 0.07, phase: 0.75, dir: -1, opacity: 0.9, width: 1.1, fill: "rgba(196,120,70,0.16)" },
-    { scale: 0.18, rotAmp: 36, scaleAmp: 0.09, phase: 0.9, dir: 1, opacity: 1, width: 1.1, fill: "rgba(196,120,70,0.24)" },
-  ];
-
-  const renderHex = (cfg: LayerCfg, key: string) => {
-    const rot = cfg.dir * cfg.rotAmp * ease + cfg.phase * 0; // base rot 0
-    const sc = cfg.scale * (1 + cfg.scaleAmp * Math.sin(TAU * t + cfg.phase * TAU));
-    const p = hex(HEX_R);
-    const lines = completeLines(p);
-    return (
-      <g key={key} transform={`rotate(${rot} ${CX} ${CY}) translate(${CX} ${CY}) scale(${sc}) translate(${-CX} ${-CY})`} opacity={cfg.opacity}>
-        {lines.map((l, i) => (
-          <line key={i} x1={l[0]} y1={l[1]} x2={l[2]} y2={l[3]} stroke={STROKE} strokeWidth={cfg.width} />
-        ))}
-      </g>
-    );
-  };
-
-  const renderSquare = (cfg: LayerCfg, key: string, baseRot: number) => {
-    const rot = baseRot + cfg.dir * cfg.rotAmp * ease;
-    const sc = cfg.scale * (1 + cfg.scaleAmp * Math.sin(TAU * t + cfg.phase * TAU));
-    const sq = square(HEX_R, 0);
-    return (
-      <g key={key} transform={`rotate(${rot} ${CX} ${CY}) translate(${CX} ${CY}) scale(${sc}) translate(${-CX} ${-CY})`} opacity={cfg.opacity}>
-        <polygon points={ptsStr(sq)} fill={cfg.fill ?? "none"} stroke={STROKE} strokeWidth={cfg.width} />
-      </g>
-    );
-  };
 
   return (
     <AbsoluteFill style={{ backgroundColor: BG }}>
-      <svg width={1080} height={1080} viewBox="0 0 1080 1080">
-        {hexLayers.map((c, i) => renderHex(c, `h${i}`))}
-        {squareLayers.map((c, i) => renderSquare(c, `s${i}`, i % 2 === 0 ? 45 : 0))}
-        {/* central diamonds */}
-        {renderSquare({ scale: 0.1, rotAmp: 40, scaleAmp: 0.12, phase: 0.5, dir: -1, opacity: 1, width: 1.2, fill: "rgba(196,120,70,0.32)" }, "core", 45)}
+      <svg width={1080} height={1080} viewBox="0 0 378 386">
+        {/* subtle warm fills, layered toward the centre (match source) */}
+        <g transform={xf(HEX_MOTION[2], s)}>
+          <polygon points={pts(hexV[2])} fill="rgba(215,133,80,0.10)" stroke="none" />
+        </g>
+        <g transform={xf(DIA_MOTION, s)}>
+          <polygon points={pts(dia)} fill="rgba(215,128,74,0.20)" stroke="none" />
+        </g>
+
+        {/* three nested K6 hexagons */}
+        {hexV.map((v, i) => (
+          <g key={i} transform={xf(HEX_MOTION[i], s)}>
+            {k6(v).map((l, j) => (
+              <line key={j} x1={l[0]} y1={l[1]} x2={l[2]} y2={l[3]} stroke={STROKE} strokeWidth={SW} />
+            ))}
+          </g>
+        ))}
+
+        {/* central diamond outline */}
+        <g transform={xf(DIA_MOTION, s)}>
+          <polygon points={pts(dia)} fill="none" stroke={STROKE} strokeWidth={SW} />
+        </g>
       </svg>
     </AbsoluteFill>
   );
