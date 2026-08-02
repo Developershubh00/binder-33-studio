@@ -1,0 +1,46 @@
+# Binder 33 Labs
+
+> Binder 33 Labs is a textile technology company from Panipat, India — the
+> home-textile belt. It builds the software the textile trade runs on: Binder OS,
+> the textile manufacturing operating system, and Creative Wizard, the AI design
+> studio for home textiles. Founded by an operator who also runs a home-textiles
+> manufacturing business in Panipat — the products come from doing the work.
+
+Binder 33 Labs (https://binder33labs.com) builds complete systems for the textile
+industry, not thin tools. The company's founding identity is operator-and-engineer:
+its products began as the software its own manufacturing operations were missing.
+It also selectively takes on technology projects for manufacturers and exporters,
+and is expanding into hardware for the manufacturing floor.
+
+## Products
+
+- Binder OS — the Textile Manufacturing Operating System. One system of record
+  replacing spreadsheets, WhatsApp groups, and disconnected registers: real-time
+  inventory, job orders, delivery challans, unit-level traceability (UINs that
+  follow every unit from intake to dispatch), quality records (GSM, EPI, PPI,
+  AQL), and an AI-powered COO Agent that works inside the team's existing
+  Telegram groups. Built for vertically integrated textile companies, exporters,
+  and job workers. Currently onboarding textile manufacturers in the Panipat
+  ecosystem.
+
+- Creative Wizard (https://creative-wizards.com) — the AI design studio for home
+  textiles. Turns a plain-words brief into manufacturable designs for bedsheets,
+  towels, curtains, rugs, cushions, throws, and more — grounded in a 60-machine
+  skills library, real yarn counts, EPI/PPI and GSM arithmetic, with a physics
+  check that informs and never blocks, and a spec sheet a production team can
+  read. Live in production. Agent brief: https://creative-wizards.com/llms.txt
+
+## Who it is for
+
+Textile manufacturers, exporters, buying houses, design studios, and job workers —
+the people who do the work, not IT departments.
+
+## Facts
+
+- Legal entity: Binder 33 Labs Private Limited
+- Location: Panipat, Haryana 132107, India
+- Contact: info@binder33labs.com
+- X / Twitter: @binder33labs
+- Sister operation: Creative Home Decor LLP, a home-textiles manufacturing
+  business in Panipat run by the founder — the operating ground the products
+  were built on.

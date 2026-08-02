@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Creative Wizard">
+  <rect width="48" height="48" rx="10" fill="#0f172b"/>
+  <g fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round">
+    <path d="M9 16 Q24 5 39 16"/>
+    <path d="M9 24 Q24 13 39 24" opacity=".8"/>
+    <path d="M9 32 Q24 21 39 32" opacity=".62"/>
+    <path d="M16 9 Q5 24 16 39"/>
+    <path d="M24 9 Q13 24 24 39" opacity=".8"/>
+    <path d="M32 9 Q21 24 32 39" opacity=".62"/>
+  </g>
+</svg>

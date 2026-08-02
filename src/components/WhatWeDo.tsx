@@ -7,20 +7,20 @@ const cards = [
     num: "01",
     title: "Products",
     description:
-      "We build our own software products — identifying underserved markets, deeply understanding the problem, and shipping complete systems. Our flagship product is Binder OS.",
+      "We build our own software for the textile industry — understanding the work from the inside and shipping complete systems. Binder OS runs textile manufacturing operations; Creative Wizard designs home textiles.",
   },
   {
     num: "02",
     title: "Projects",
     description:
-      "We selectively take on technology projects as an agency — working with companies and teams that need serious engineering and product thinking applied to hard problems.",
+      "We selectively take on technology projects for manufacturers, exporters, and teams that need serious engineering and product thinking applied to real operational problems.",
   },
   {
     num: "03",
     title: "Hardware",
     tag: "Expanding Into",
     description:
-      "We're extending into hardware — building physical products that complement our software capabilities. More details coming soon.",
+      "We're extending into hardware — physical products for the manufacturing floor that complement our software capabilities. More details coming soon.",
   },
 ];
 

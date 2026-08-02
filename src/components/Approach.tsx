@@ -13,7 +13,7 @@ const principles = [
     ),
     title: "Start from the problem, not the technology",
     description:
-      "We don't build solutions looking for problems. We start by operating inside the domain — running the factory, doing the work — and build from what's missing.",
+      "We don't build solutions looking for problems. We start by operating inside the domain — running the manufacturing floor, doing the work — and build from what's missing.",
   },
   {
     num: "02",
@@ -50,7 +50,7 @@ const principles = [
     ),
     title: "Build for the people who do the work",
     description:
-      "Our users are factory owners, machine operators, and job workers — not IT departments. If the person doing the work can't use it without training, it's not done.",
+      "Our users are manufacturers, machine operators, designers, and job workers — not IT departments. If the person doing the work can't use it without training, it's not done.",
   },
 ];
 

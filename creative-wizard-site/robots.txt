@@ -1,4 +1,4 @@
-# Binder 33 Labs — all welcome, humans and agents alike.
+# Creative Wizard — all welcome, humans and agents alike.
 
 User-agent: Googlebot
 Allow: /
@@ -48,4 +48,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://binder33labs.com/sitemap.xml
+Sitemap: https://creativewizard.binder33labs.com/sitemap.xml

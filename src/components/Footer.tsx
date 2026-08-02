@@ -30,6 +30,7 @@ const Footer = () => {
             <a href="#about" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">About</a>
             <a href="#products" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Products</a>
             <a href="https://binderos.com" target="_blank" rel="noopener noreferrer" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Binder OS</a>
+            <a href="https://creative-wizards.com" target="_blank" rel="noopener noreferrer" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Creative Wizard</a>
             <a href="#contact" className="text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-mono text-xs tracking-wider">Contact</a>
           </nav>
         </div>

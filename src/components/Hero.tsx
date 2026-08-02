@@ -149,7 +149,7 @@ const ScrambleReveal = ({ text, delay = 0 }: { text: string; delay?: number }) =
   useEffect(() => {
     if (!started) return;
     let frame = 0;
-    const totalFrames = text.length * 2;
+    const totalFrames = text.length;
 
     const interval = setInterval(() => {
       frame++;
@@ -165,7 +165,7 @@ const ScrambleReveal = ({ text, delay = 0 }: { text: string; delay?: number }) =
         setDisplay(text);
         clearInterval(interval);
       }
-    }, 25);
+    }, 14);
 
     return () => clearInterval(interval);
   }, [started, text]);
@@ -207,11 +207,11 @@ const Hero = () => {
       >
         <div className="max-w-5xl">
 
-          <h1 className="text-[clamp(3rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.9] text-foreground glow-text">
-            <RevealText delay={0.6}>We Build Things</RevealText>
+          <h1 className="text-[clamp(2.6rem,7vw,6.2rem)] font-bold tracking-[-0.03em] leading-[0.95] text-foreground glow-text">
+            <RevealText delay={0.6}>Textile Technology,</RevealText>
             <br />
             <span className="text-foreground/80">
-              <RevealText delay={0.8}>That Work</RevealText>
+              <RevealText delay={0.8}>Built by Operators</RevealText>
             </span>
           </h1>
 
@@ -222,7 +222,7 @@ const Hero = () => {
             className="mt-12 text-foreground/50 max-w-2xl leading-relaxed font-mono text-sm md:text-base font-medium"
           >
             <ScrambleReveal
-              text="Binder 33 Labs is a technology company that builds software products, takes on hard problems, and ships solutions. Based in India. Building for the world."
+              text="Binder 33 Labs is a textile technology company from Panipat, India's home-textile belt. We build the software the trade runs on — from the manufacturing floor to the design studio. Building for the world."
               delay={1.8}
             />
           </motion.p>
@@ -235,7 +235,7 @@ const Hero = () => {
             className="group inline-flex items-center gap-4 mt-14 text-sm text-foreground/40 hover:text-foreground/80 transition-colors duration-500 relative"
           >
             <span className="h-px w-8 bg-current transition-all duration-500 group-hover:w-12" style={{ boxShadow: '0 0 6px rgba(255,255,255,0.1)' }} />
-            <span className="font-mono text-xs tracking-[0.2em] uppercase">See Our Work</span>
+            <span className="font-mono text-xs tracking-[0.2em] uppercase">See Our Products</span>
             <motion.span
               className="inline-block"
               animate={{ x: [0, 4, 0] }}

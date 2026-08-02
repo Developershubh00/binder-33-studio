@@ -43,10 +43,11 @@ const About = () => {
           >
             <div className="border-l border-foreground/15 pl-8" style={{ boxShadow: '-1px 0 8px rgba(255,255,255,0.03)' }}>
               <p className="text-xl md:text-[1.6rem] text-foreground/80 leading-[1.7] font-medium tracking-[-0.01em]">
-                Binder 33 Labs is based in India. The company was founded by a builder
-                who runs both a technology studio and a textile manufacturing business
-                (Creative Home Decor LLP) in Panipat, Haryana. That dual identity —
-                operator and engineer — is central to how we work.
+                Binder 33 Labs is a textile technology company from Panipat,
+                Haryana — India's home-textile belt. It was founded by a builder
+                who runs both a technology studio and a home-textiles
+                manufacturing business (Creative Home Decor LLP). That dual
+                identity — operator and engineer — is central to how we work.
               </p>
             </div>
           </motion.div>
@@ -58,10 +59,13 @@ const About = () => {
             transition={{ delay: 0.1, duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
             className="text-base md:text-[17px] text-muted-foreground leading-[1.8]"
           >
-            Our first product, Binder OS, came directly from the frustration of
-            running a factory without any real software. But Binder 33 Labs is not
-            defined by one product or one industry. We are a technology company that
-            builds wherever we see a hard problem worth solving.
+            Our products come straight from the floor. Binder OS — our textile
+            manufacturing operating system — began as the system we needed to run
+            our own operations without spreadsheets and scattered registers.
+            Creative Wizard — our AI design studio for home textiles — began as
+            the design capability our own development room was missing. We build
+            for textiles first, and wherever we see a hard problem worth solving
+            next.
           </motion.p>
 
           <motion.p
