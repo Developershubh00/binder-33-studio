@@ -101,7 +101,7 @@ const Products = () => {
                 manufacturers in the Panipat ecosystem.
               </p>
               <a
-                href="https://binderos.com"
+                href="https://binder-os.binder33labs.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 text-sm font-medium text-background bg-foreground/90 px-8 py-3.5 rounded-sm hover:bg-foreground transition-all duration-300"
