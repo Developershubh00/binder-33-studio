@@ -120,36 +120,39 @@ const Products = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
           className="relative border border-foreground/8 rounded-sm overflow-hidden max-w-5xl mx-auto mt-8"
+          style={{ backgroundColor: '#fafaf9' }}
         >
-          {/* Prime Radiant as full background — same treatment as the Binder OS card */}
-          <div className="absolute inset-0 z-0">
-            <BindingHeroCanvas />
-          </div>
+          {/* Creative Wizard's own gallery-white theme: woven-thread motif on paper */}
+          <svg className="absolute inset-0 z-0 w-full h-full pointer-events-none" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g fill="none" stroke="#0f172b" strokeWidth="1.1" strokeLinecap="round">
+              <path d="M-40 140 Q500 -60 1040 140" opacity="0.07" />
+              <path d="M-40 300 Q500 100 1040 300" opacity="0.055" />
+              <path d="M-40 460 Q500 260 1040 460" opacity="0.04" />
+              <path d="M170 -40 Q-30 280 170 600" opacity="0.06" />
+              <path d="M500 -40 Q300 280 500 600" opacity="0.05" />
+              <path d="M830 -40 Q630 280 830 600" opacity="0.06" />
+            </g>
+          </svg>
 
-          {/* Overlay gradient for text readability */}
-          <div className="absolute inset-0 z-[1] pointer-events-none" style={{
-            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)'
-          }} />
-
-          {/* Corner marks */}
-          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-foreground/10 z-[2]" />
-          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-foreground/10 z-[2]" />
-          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10 z-[2]" />
-          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10 z-[2]" />
+          {/* Corner marks — ink on paper */}
+          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-[#0f172b]/15 z-[2]" />
+          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0f172b]/15 z-[2]" />
+          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-[#0f172b]/15 z-[2]" />
+          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#0f172b]/15 z-[2]" />
 
           <div className="relative z-[3] text-center max-w-2xl mx-auto py-20 md:py-32 px-8 md:px-16">
-              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
+              <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#94a3b8]">
                 Live Product
               </span>
-              <h3 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 mb-4 text-foreground"
-                style={{ textShadow: '0 0 30px rgba(255,255,255,0.1)' }}
+              <h3 className="text-3xl md:text-5xl tracking-tight mt-4 mb-4 text-[#0f172b]"
+                style={{ fontFamily: 'ui-serif, Georgia, "Times New Roman", serif', letterSpacing: '-0.01em' }}
               >
                 Creative Wizard
               </h3>
-              <p className="text-foreground/60 text-sm mb-8 font-medium tracking-wide">
+              <p className="text-[#475569] text-sm mb-8 font-medium tracking-wide">
                 The AI design studio for home textiles.
               </p>
-              <p className="text-foreground/50 text-[15px] leading-[1.8] mx-auto mb-5">
+              <p className="text-[#334155] text-[15px] leading-[1.8] mx-auto mb-5">
                 Creative Wizard turns a plain-words brief into manufacturable
                 home-textile designs — bedsheets, towels, curtains, rugs, cushions,
                 throws — grounded in real looms, yarn counts, EPI, PPI, and GSM.
@@ -157,15 +160,14 @@ const Products = () => {
                 check flags what can't honestly be made, and every design lands
                 with a spec sheet a production team can read.
               </p>
-              <p className="text-foreground/35 italic mb-10 font-mono text-xs">
+              <p className="text-[#94a3b8] italic mb-10 font-mono text-xs">
                 Manufacturable concepts in minutes instead of sampling cycles.
               </p>
               <a
                 href="https://creative-wizards.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 text-sm font-medium text-background bg-foreground/90 px-8 py-3.5 rounded-sm hover:bg-foreground transition-all duration-300"
-                style={{ boxShadow: '0 0 20px rgba(255,255,255,0.1)' }}
+                className="group inline-flex items-center gap-3 text-sm font-medium text-[#fafaf9] bg-[#0f172b] px-8 py-3.5 rounded-sm hover:bg-[#1e293b] transition-all duration-300"
               >
                 <span>Explore Creative Wizard</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
