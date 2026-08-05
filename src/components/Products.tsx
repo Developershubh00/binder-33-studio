@@ -119,16 +119,16 @@ const Products = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-          className="relative border border-foreground/8 rounded-sm overflow-hidden max-w-5xl mx-auto mt-8 bg-card"
+          className="relative border border-foreground/8 rounded-sm overflow-hidden max-w-5xl mx-auto mt-8"
         >
-          {/* Warp-and-weft hairline motif */}
-          <div className="absolute inset-0 z-0 pointer-events-none" style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
-            backgroundSize: '56px 56px',
-          }} />
+          {/* Prime Radiant as full background — same treatment as the Binder OS card */}
+          <div className="absolute inset-0 z-0">
+            <BindingHeroCanvas />
+          </div>
+
+          {/* Overlay gradient for text readability */}
           <div className="absolute inset-0 z-[1] pointer-events-none" style={{
-            background: 'radial-gradient(ellipse 70% 60% at 50% 30%, rgba(255,255,255,0.02) 0%, transparent 70%)'
+            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)'
           }} />
 
           {/* Corner marks */}
@@ -137,7 +137,7 @@ const Products = () => {
           <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-foreground/10 z-[2]" />
           <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-foreground/10 z-[2]" />
 
-          <div className="relative z-[3] text-center max-w-2xl mx-auto py-20 md:py-28 px-8 md:px-16">
+          <div className="relative z-[3] text-center max-w-2xl mx-auto py-20 md:py-32 px-8 md:px-16">
               <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-foreground/40">
                 Live Product
               </span>
@@ -158,8 +158,7 @@ const Products = () => {
                 with a spec sheet a production team can read.
               </p>
               <p className="text-foreground/35 italic mb-10 font-mono text-xs">
-                Buyer-ready, manufacturable concepts in minutes instead of
-                sampling cycles.
+                Manufacturable concepts in minutes instead of sampling cycles.
               </p>
               <a
                 href="https://creative-wizards.com"

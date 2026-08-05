@@ -208,7 +208,7 @@ const Hero = () => {
         <div className="max-w-5xl">
 
           <h1 className="text-[clamp(2.6rem,7vw,6.2rem)] font-bold tracking-[-0.03em] leading-[0.95] text-foreground glow-text">
-            <RevealText delay={0.6}>Textile Technology,</RevealText>
+            <RevealText delay={0.6}>A Textile Technology Company</RevealText>
             <br />
             <span className="text-foreground/80">
               <RevealText delay={0.8}>Built by Operators</RevealText>
